@@ -26,7 +26,7 @@ public class UsuarioDao {
 		
 		this.connection.open();
 		try {
-			// prepared statement para inserção
+			// prepared statement para inserÃ§Ã£o
 
 			PreparedStatement stmt = connection.getConnection().prepareStatement(sql);
 
@@ -70,7 +70,7 @@ public class UsuarioDao {
 				usuario.setUsuario(rs.getString("usuario"));
 				usuario.setChave(rs.getString("chave"));
 				usuario.setInativo(rs.getInt("inativo"));
-				// adicionando o objeto à lista
+				// adicionando o objeto Ã  lista
 			}
 
 			rs.close();
@@ -102,7 +102,7 @@ public class UsuarioDao {
 				usuario.setChave(rs.getString("chave"));
 				usuario.setInativo(rs.getInt("inativo"));
 				usuario.getPessoa().setId(rs.getInt("idPessoa"));
-				// adicionando o objeto à lista
+				// adicionando o objeto Ã  lista
 			}
 
 			rs.close();
