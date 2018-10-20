@@ -20,7 +20,7 @@ public class UsuarioDao {
 		usuario.setId(0);
 
 		String sql = "insert into Usuarios" 
-				+ "(usuario, chave, inativo, idPessoa)" 
+				+ "(login, chave, inativo, idPessoa)" 
 				+ "Output Inserted.id as id"
 				+ " values (?,?,?,?)";
 		
@@ -31,7 +31,7 @@ public class UsuarioDao {
 			PreparedStatement stmt = connection.getConnection().prepareStatement(sql);
 
 			// seta os valores
-			stmt.setString(1, usuario.getUsuario());
+			stmt.setString(1, usuario.getLogin());
 			stmt.setString(2, usuario.getChave());
 			stmt.setInt(3, usuario.getInativo());
 			stmt.setInt(4, usuario.getPessoa().getId());
@@ -55,7 +55,7 @@ public class UsuarioDao {
 		this.connection.open();
 		try {
 			PreparedStatement stmt = this.connection.getConnection()
-					.prepareStatement("select id, u.idPessoa, usuario, chave, inativo " + 
+					.prepareStatement("select id, login, chave, u.idPessoa, inativo " + 
 										" from Usuarios " + 
 										" where id = ?");
 			stmt.setInt(1, id);
@@ -67,8 +67,9 @@ public class UsuarioDao {
 			if (rs.next()) {
 
 				usuario.setId(rs.getInt("id"));
-				usuario.setUsuario(rs.getString("usuario"));
+				usuario.setLogin(rs.getString("login"));
 				usuario.setChave(rs.getString("chave"));
+				usuario.getPessoa().setId(rs.getInt("idPessoa"));
 				usuario.setInativo(rs.getInt("inativo"));
 				// adicionando o objeto à lista
 			}
@@ -84,21 +85,21 @@ public class UsuarioDao {
 		}
 	}
 
-	public Usuario getUsuario(Usuario usuario) {
+	public Usuario getUsuario(String login, String chave) {
 		this.connection.open();
 		try {
 			PreparedStatement stmt = this.connection.getConnection().prepareStatement(
-					"select id, usuario, chave, inativo, idPessoa from Usuarios where usuario = ? and chave = ?");
-			stmt.setString(1, usuario.getUsuario());
-			stmt.setString(2, usuario.getChave());
+					"select id, login, chave, inativo, idPessoa from Usuarios where login = ? and chave = ?");
+			stmt.setString(1, login);
+			stmt.setString(2, chave);
 
 			ResultSet rs = stmt.executeQuery();
-			usuario = new Usuario();
+			Usuario usuario = new Usuario();
 			// criando o objeto Contato
 			if (rs.next()) {
 
 				usuario.setId(rs.getInt("id"));
-				usuario.setUsuario(rs.getString("usuario"));
+				usuario.setLogin(rs.getString("login"));
 				usuario.setChave(rs.getString("chave"));
 				usuario.setInativo(rs.getInt("inativo"));
 				usuario.getPessoa().setId(rs.getInt("idPessoa"));

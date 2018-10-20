@@ -51,7 +51,7 @@ public class SqlConnection implements DbConnection {
 	public void sqlServer() {
 		prop.setPorta("1433");
 		prop.setHost("localHost");
-		prop.setBase("PI5");
+		prop.setBase("Integration");
 		prop.setLogin("sa");
 		prop.setSenha("121212");
 		prop.setDrive("com.microsoft.sqlserver.jdbc.SQLServerDriver");

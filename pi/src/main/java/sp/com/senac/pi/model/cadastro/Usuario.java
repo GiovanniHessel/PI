@@ -3,22 +3,22 @@ package sp.com.senac.pi.model.cadastro;
 public class Usuario {
 	private int id;
 	private Pessoa pessoa;
-	private String usuario;
+	private String login;
 	private String chave;
 	private int inativo;
 	
 	public Usuario() {
 		this.id = 0;
 		this.pessoa = new Pessoa();
-		this.usuario = "";
+		this.login = "";
 		this.chave = "";
 		this.inativo = 0;
 	}
 	
-	public Usuario(int id, Pessoa pessoa, String usuario, String chave, int inativo) {
+	public Usuario(int id, Pessoa pessoa, String login, String chave, int inativo) {
 		this.id = id;
 		this.pessoa = pessoa;
-		this.usuario = usuario;
+		this.login = login;
 		this.chave = chave;
 		this.inativo = inativo;
 	}
@@ -35,11 +35,11 @@ public class Usuario {
 	public void setPessoa(Pessoa pessoa) {
 		this.pessoa = pessoa;
 	}
-	public String getUsuario() {
-		return usuario;
+	public String getLogin() {
+		return login;
 	}
-	public void setUsuario(String usuario) {
-		this.usuario = usuario;
+	public void setLogin(String login) {
+		this.login = login;
 	}
 	public String getChave() {
 		return chave;
