@@ -59,23 +59,14 @@ public class UsuarioDao {
 		this.connection.open();
 		try {
 			PreparedStatement stmt = this.connection.getConnection()
-					.prepareStatement("select id, login, chave, u.idPessoa, inativo " + 
-										" from Usuarios " + 
-										" where id = ?");
+					.prepareStatement("select * from vwUsuario where id = ?");
 			stmt.setInt(1, id);
 
 			ResultSet rs = stmt.executeQuery();
 			Usuario usuario = new Usuario();
 	
-			// criando o objeto Contato
 			if (rs.next()) {
-
-				usuario.setId(rs.getInt("id"));
-				usuario.setLogin(rs.getString("login"));
-				usuario.setChave(rs.getString("chave"));
-				usuario.getPessoa().setId(rs.getInt("idPessoa"));
-				usuario.setInativo(rs.getInt("inativo"));
-				// adicionando o objeto à lista
+				this.carregaUsuario(rs);
 			}
 
 			rs.close();
@@ -92,8 +83,7 @@ public class UsuarioDao {
 	public Usuario getUsuario(String login, String chave) {
 		this.connection.open();
 		try {
-			PreparedStatement stmt = this.connection.getConnection().prepareStatement(
-					"select id, login, chave, inativo, idPessoa from Usuarios where login = ? and chave = ?");
+			PreparedStatement stmt = this.connection.getConnection().prepareStatement("select * from vwUsuario where login = ? and chave = ?");
 			stmt.setString(1, login);
 			stmt.setString(2, chave);
 
@@ -101,13 +91,7 @@ public class UsuarioDao {
 			Usuario usuario = new Usuario();
 			// criando o objeto Contato
 			if (rs.next()) {
-
-				usuario.setId(rs.getInt("id"));
-				usuario.setLogin(rs.getString("login"));
-				usuario.setChave(rs.getString("chave"));
-				usuario.setInativo(rs.getInt("inativo"));
-				usuario.getPessoa().setId(rs.getInt("idPessoa"));
-				// adicionando o objeto à lista
+				this.carregaUsuario(rs);
 			}
 
 			rs.close();
