@@ -45,7 +45,6 @@ public class CidadeDao {
         return true;
     }
 
-    
  
     public Cidade getCidade(int id) {
         this.connection.open();

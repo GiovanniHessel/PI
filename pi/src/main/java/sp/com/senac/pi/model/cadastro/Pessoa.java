@@ -9,6 +9,7 @@ public class Pessoa {
     private String sobrenome;
     private String cpf;
     private String dataDeNascimento;
+    private String sexo;
     private String logradouro;
     private String numero;
     private String complemento;
@@ -23,6 +24,7 @@ public class Pessoa {
         this.sobrenome = "";
         this.cpf = "";
         this.dataDeNascimento = "";
+        this.sexo = "";
         this.logradouro = "";
 		this.numero = "";
 		this.complemento = "";
@@ -32,13 +34,14 @@ public class Pessoa {
         this.inativo = 0;
     }
     
-	public Pessoa(int id, String nome, String sobrenome, String cpf, String dataDeNascimento, String logradouro,
+	public Pessoa(int id, String nome, String sobrenome, String cpf, String dataDeNascimento, String sexo, String logradouro,
 			String numero, String complemento, String bairro, Cidade cidade, List<Contato> contatos, int inativo) {
 		this.id = id;
 		this.nome = nome;
 		this.sobrenome = sobrenome;
 		this.cpf = cpf;
 		this.dataDeNascimento = dataDeNascimento;
+		this.sexo = sexo;
 		this.logradouro = logradouro;
 		this.numero = numero;
 		this.complemento = complemento;
@@ -86,6 +89,14 @@ public class Pessoa {
 
 	public void setDataDeNascimento(String dataDeNascimento) {
 		this.dataDeNascimento = dataDeNascimento;
+	}
+	
+	public String getSexo() {
+		return sexo;
+	}
+
+	public void setSexo(String sexo) {
+		this.sexo = sexo;
 	}
 
 	public String getLogradouro() {

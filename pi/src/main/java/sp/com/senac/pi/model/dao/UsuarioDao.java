@@ -6,6 +6,10 @@ import java.sql.SQLException;
 
 import sp.com.senac.pi.conexao.contratos.DbConnection;
 import sp.com.senac.pi.conexao.singleton.ConnectionSingleton;
+import sp.com.senac.pi.model.cadastro.Cidade;
+import sp.com.senac.pi.model.cadastro.Estado;
+import sp.com.senac.pi.model.cadastro.Pais;
+import sp.com.senac.pi.model.cadastro.Pessoa;
 import sp.com.senac.pi.model.cadastro.Usuario;
 
 public class UsuarioDao {
@@ -115,5 +119,53 @@ public class UsuarioDao {
 			connection.close();
 			throw new RuntimeException(e);
 		}
+	}
+	
+	private Usuario carregaUsuario(ResultSet rs) {
+		Usuario usuario = new Usuario();
+		Pessoa pessoa = new Pessoa();
+		Cidade cidade = new Cidade();
+		Estado estado = new Estado();
+    	Pais pais = new Pais();
+    	
+		try {
+			usuario.setId(rs.getInt("id"));
+			usuario.setLogin(rs.getString("login"));
+			usuario.setChave(rs.getString("chave"));
+			usuario.setInativo(rs.getInt("inativo"));
+			
+			pessoa.setId(rs.getInt("idPessoa"));
+			pessoa.setNome(rs.getString("nome"));
+			pessoa.setSobrenome(rs.getString("sobreNome"));
+			pessoa.setCPF(rs.getString("CPF"));
+			pessoa.setDataDeNascimento(rs.getString("dataDeNascimento"));
+			pessoa.setSexo(rs.getString("sexo"));
+			pessoa.setLogradouro(rs.getString("logradouro"));
+			pessoa.setNumero(rs.getString("numero"));
+			pessoa.setComplemento(rs.getString("complemento"));
+			pessoa.setBairro(rs.getString("bairro"));
+			
+			cidade.setId(rs.getInt("idCidade"));
+			cidade.setCidade(rs.getString("cidade"));
+            cidade.setSigla(rs.getString("siglaCidade"));
+            
+			estado.setId(rs.getInt("idEstado"));
+	        estado.setEstado(rs.getString("estado"));
+	        estado.setSigla(rs.getString("siglaEstado"));
+	        
+	        pais.setId(rs.getInt("idPais"));
+	        pais.setPais(rs.getString("pais"));
+	        pais.setSigla(rs.getString("siglaPais"));
+			
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+		
+		estado.setPais(pais);
+        cidade.setEstados(estado);
+        pessoa.setCidade(cidade);
+        usuario.setPessoa(pessoa);
+        
+        return usuario;
 	}
 }

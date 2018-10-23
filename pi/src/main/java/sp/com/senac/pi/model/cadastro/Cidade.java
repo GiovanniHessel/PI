@@ -17,15 +17,6 @@ public class Cidade {
         this.inativo = 0;
     }
     
-    public Cidade(int id) {
-        this.id = id;
-        this.cidade = "";
-        this.sigla = "";
-        this.estado = new Estado();
-        this.pais = new Pais();
-        this.inativo = 0;
-    }
-    
     public Cidade(int id, String cidade, String sigla, Estado estado, Pais pais, int inativo) {
         this.id = id;
         this.cidade = cidade;
