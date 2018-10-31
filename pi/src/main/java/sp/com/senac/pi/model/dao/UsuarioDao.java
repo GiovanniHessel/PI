@@ -146,7 +146,7 @@ public class UsuarioDao {
 		}
 		
 		estado.setPais(pais);
-        cidade.setEstados(estado);
+        cidade.setEstado(estado);
         pessoa.setCidade(cidade);
         usuario.setPessoa(pessoa);
         

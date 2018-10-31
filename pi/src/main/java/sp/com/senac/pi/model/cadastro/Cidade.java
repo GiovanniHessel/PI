@@ -50,11 +50,11 @@ public class Cidade {
         this.sigla = sigla;
     }
 
-    public Estado getEstados() {
+    public Estado getEstado() {
         return estado;
     }
 
-    public void setEstados(Estado estado) {
+    public void setEstado(Estado estado) {
         this.estado = estado;
     }
 

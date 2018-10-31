@@ -29,11 +29,11 @@ public class PessoaDao {
 
 		this.connection.open();
 		try {
-			// prepared statement para inserção
+	
 
 			PreparedStatement stmt = connection.getConnection().prepareStatement(sql);
 
-			// seta os valores
+		
 			stmt.setString(1, pessoa.getNome());
 			stmt.setString(2, pessoa.getSobrenome());
 			stmt.setString(3, pessoa.getCPF());
@@ -46,7 +46,6 @@ public class PessoaDao {
 			stmt.setInt(10, pessoa.getCidade().getId());
 			stmt.setInt(11, pessoa.getInativo());
 
-			// executa
 			ResultSet rs = stmt.executeQuery();
 			if (rs.next()) {
 				pessoa.setId(rs.getInt("id"));
