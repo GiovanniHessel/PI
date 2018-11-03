@@ -1,4 +1,4 @@
-package sp.com.senac.pi.model.dao;
+package sp.com.senac.pi.model.base.dao;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -8,10 +8,12 @@ import java.util.List;
 
 import sp.com.senac.pi.conexao.contratos.DbConnection;
 import sp.com.senac.pi.conexao.singleton.ConnectionSingleton;
-import sp.com.senac.pi.model.cadastro.Cidade;
-import sp.com.senac.pi.model.cadastro.Estado;
-import sp.com.senac.pi.model.cadastro.Pais;
-import sp.com.senac.pi.model.cadastro.Pessoa;
+import sp.com.senac.pi.model.base.Pessoa;
+import sp.com.senac.pi.model.contato.Contato;
+import sp.com.senac.pi.model.contato.dao.ContatoDao;
+import sp.com.senac.pi.model.localizacao.Cidade;
+import sp.com.senac.pi.model.localizacao.Estado;
+import sp.com.senac.pi.model.localizacao.Pais;
 
 public class PessoaDao {
 	private DbConnection connection;
@@ -26,11 +28,10 @@ public class PessoaDao {
 		String sql = "insert into Pessoa"
 				+ "(nome, sobrenome, CPF, dataDeNascimento, sexo, logradouro, numero, complemento, bairro, idCidade, inativo)"
 				+ "Output Inserted.id as id" + " values (?,?,?,?,?,?,?,?,?,?,?)";
-
+		
 		this.connection.open();
 		try {
 	
-
 			PreparedStatement stmt = connection.getConnection().prepareStatement(sql);
 
 		
@@ -58,6 +59,14 @@ public class PessoaDao {
 			return pessoa;
 		}
 		connection.close();
+		
+		List<Contato> contatos = new ArrayList<Contato>();
+		for (Contato contato : pessoa.getContatos()) {
+			contato.setIdPessoa(pessoa.getId());
+			contatos.add(new ContatoDao().insert(contato));
+		}
+
+		pessoa.setContatos(contatos);
 		return pessoa;
 	}
 
@@ -84,11 +93,11 @@ public class PessoaDao {
 		}
 	}
 
-	public Pessoa getPessoaCPF(int cpf) {
+	public Pessoa getPessoa(String cpf) {
 		this.connection.open();
 		try {
 			PreparedStatement stmt = this.connection.getConnection().prepareStatement("select * from vwPessoa where CPF = ?");
-			stmt.setInt(1, cpf);
+			stmt.setString(1, cpf);
 
 			ResultSet rs = stmt.executeQuery();
 			Pessoa pessoa = new Pessoa();
@@ -146,6 +155,7 @@ public class PessoaDao {
 			pessoa.setNumero(rs.getString("numero"));
 			pessoa.setComplemento(rs.getString("complemento"));
 			pessoa.setBairro(rs.getString("bairro"));
+			pessoa.setContatos(new ContatoDao().getContatos(pessoa));
 			pessoa.setInativo(rs.getInt("inativo"));
 			
 			cidade.setId(rs.getInt("idCidade"));

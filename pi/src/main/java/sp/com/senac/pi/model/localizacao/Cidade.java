@@ -1,11 +1,10 @@
-package sp.com.senac.pi.model.cadastro;
+package sp.com.senac.pi.model.localizacao;
 
 public class Cidade {
 	private int id;
     private String cidade;
     private String sigla;    
     private Estado estado;
-    private Pais pais;
     private int inativo;
 
     public Cidade() {
@@ -13,16 +12,14 @@ public class Cidade {
         this.cidade = "";
         this.sigla = "";
         this.estado = new Estado();
-        this.pais = new Pais();
         this.inativo = 0;
     }
     
-    public Cidade(int id, String cidade, String sigla, Estado estado, Pais pais, int inativo) {
+    public Cidade(int id, String cidade, String sigla, Estado estado, int inativo) {
         this.id = id;
         this.cidade = cidade;
         this.sigla = sigla;
         this.estado = estado;
-        this.pais = pais;
         this.inativo = inativo;
     }
 
@@ -58,13 +55,6 @@ public class Cidade {
         this.estado = estado;
     }
 
-    public Pais getPais() {
-        return pais;
-    }
-
-    public void setPais(Pais pais) {
-        this.pais = pais;
-    }
 
     public int getInativo() {
         return inativo;

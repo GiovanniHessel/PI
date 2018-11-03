@@ -1,4 +1,4 @@
-package sp.com.senac.pi.model.cadastro;
+package sp.com.senac.pi.model.base;
 
 public class Usuario {
 	private int id;

@@ -1,4 +1,4 @@
-package sp.com.senac.pi.model.dao;
+package sp.com.senac.pi.model.base.dao;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -6,11 +6,12 @@ import java.sql.SQLException;
 
 import sp.com.senac.pi.conexao.contratos.DbConnection;
 import sp.com.senac.pi.conexao.singleton.ConnectionSingleton;
-import sp.com.senac.pi.model.cadastro.Cidade;
-import sp.com.senac.pi.model.cadastro.Estado;
-import sp.com.senac.pi.model.cadastro.Pais;
-import sp.com.senac.pi.model.cadastro.Pessoa;
-import sp.com.senac.pi.model.cadastro.Usuario;
+import sp.com.senac.pi.model.base.Pessoa;
+import sp.com.senac.pi.model.base.Usuario;
+import sp.com.senac.pi.model.localizacao.Cidade;
+import sp.com.senac.pi.model.localizacao.Estado;
+import sp.com.senac.pi.model.localizacao.Pais;
+import sp.com.senac.pi.seguranca.control.Seguranca;
 
 public class UsuarioDao {
 	private DbConnection connection;
@@ -22,24 +23,24 @@ public class UsuarioDao {
 	public Usuario insert(Usuario usuario) {
 
 		usuario.setId(0);
-
-		String sql = "insert into Usuarios" 
+		
+		String sql = "insert into Usuario" 
 				+ "(login, chave, inativo, idPessoa)" 
 				+ "Output Inserted.id as id"
 				+ " values (?,?,?,?)";
 		
+		usuario.setPessoa(new PessoaDao().insert(usuario.getPessoa()));
+		
 		this.connection.open();
 		try {
-			// prepared statement para inserção
 
 			PreparedStatement stmt = connection.getConnection().prepareStatement(sql);
 
-			// seta os valores
 			stmt.setString(1, usuario.getLogin());
-			stmt.setString(2, usuario.getChave());
+			stmt.setString(2, new Seguranca().hash(usuario.getChave()));
 			stmt.setInt(3, usuario.getInativo());
 			stmt.setInt(4, usuario.getPessoa().getId());
-			// executa
+		
 			ResultSet rs = stmt.executeQuery();
 			if (rs.next()) {
 				usuario.setId(rs.getInt("id"));
@@ -54,7 +55,7 @@ public class UsuarioDao {
 		connection.close();
 		return usuario;
 	}
-
+	
 	public Usuario getUsuario(int id) {
 		this.connection.open();
 		try {
@@ -66,7 +67,7 @@ public class UsuarioDao {
 			Usuario usuario = new Usuario();
 	
 			if (rs.next()) {
-				this.carregaUsuario(rs);
+				usuario = this.carregaUsuario(rs);
 			}
 
 			rs.close();
@@ -85,13 +86,13 @@ public class UsuarioDao {
 		try {
 			PreparedStatement stmt = this.connection.getConnection().prepareStatement("select * from vwUsuario where login = ? and chave = ?");
 			stmt.setString(1, login);
-			stmt.setString(2, chave);
+			stmt.setString(2, new Seguranca().hash(chave));
 
 			ResultSet rs = stmt.executeQuery();
 			Usuario usuario = new Usuario();
-			// criando o objeto Contato
+		
 			if (rs.next()) {
-				this.carregaUsuario(rs);
+				usuario = this.carregaUsuario(rs);
 			}
 
 			rs.close();

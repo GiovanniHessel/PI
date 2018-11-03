@@ -1,4 +1,4 @@
-package sp.com.senac.pi.model.cadastro;
+package sp.com.senac.pi.model.localizacao;
 
 public class Pais {
 	private int id;

@@ -1,4 +1,4 @@
-package sp.com.senac.pi.model.dao;
+package sp.com.senac.pi.model.localizacao.dao;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -8,7 +8,7 @@ import java.util.List;
 
 import sp.com.senac.pi.conexao.contratos.DbConnection;
 import sp.com.senac.pi.conexao.singleton.ConnectionSingleton;
-import sp.com.senac.pi.model.cadastro.Pais;
+import sp.com.senac.pi.model.localizacao.Pais;
 
 public class PaisDao {
 	private DbConnection connection;
@@ -18,7 +18,7 @@ public class PaisDao {
     }
     
     public boolean insert(Pais pais) {
-        String sql = "exec spi_pais (?,?,?,?)";
+        String sql = "exec spiu_pais (?,?,?,?)";
         connection.open();
         try {
 
@@ -93,7 +93,7 @@ public class PaisDao {
 	        
 	        pais.setId(rs.getInt("id"));
 	        pais.setPais(rs.getString("pais"));
-	        pais.setSigla(rs.getString("siglaPais"));
+	        pais.setSigla(rs.getString("sigla"));
 	        pais.setInativo(rs.getInt("inativo"));
         
         } catch (SQLException e) {

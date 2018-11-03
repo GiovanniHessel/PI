@@ -1,4 +1,4 @@
-package sp.com.senac.pi.model.dao;
+package sp.com.senac.pi.model.localizacao.dao;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -8,28 +8,30 @@ import java.util.List;
 
 import sp.com.senac.pi.conexao.contratos.DbConnection;
 import sp.com.senac.pi.conexao.singleton.ConnectionSingleton;
-import sp.com.senac.pi.model.cadastro.Estado;
-import sp.com.senac.pi.model.cadastro.Pais;
+import sp.com.senac.pi.model.localizacao.Cidade;
+import sp.com.senac.pi.model.localizacao.Estado;
+import sp.com.senac.pi.model.localizacao.Pais;
 
-public class EstadoDao {
+public class CidadeDao {
 	private DbConnection connection;
 
-    public EstadoDao() {
+    public CidadeDao() {
         this.connection = ConnectionSingleton.getConnection();
     }
     
-    public boolean insert(Estado estado) {
-        String sql = "exec spi_estado (?,?,?,?,?)";
+    public boolean insert(Cidade cidade) {
+        String sql = "insert into Cidades"
+                + "(cidade, sigla, idEstado, inativo)"
+                + " values (?,?,?,?)";
         connection.open();
         try {
 
             PreparedStatement stmt = connection.getConnection().prepareStatement(sql);
 
-            stmt.setInt(1, estado.getId());
-            stmt.setString(2, estado.getEstado());
-            stmt.setString(3, estado.getSigla());
-            stmt.setInt(4, estado.getPais().getId());
-            stmt.setInt(5, estado.getInativo());
+            stmt.setString(1, cidade.getCidade());
+            stmt.setString(2, cidade.getSigla());
+            stmt.setInt(3, cidade.getEstado().getId());
+            stmt.setInt(4, cidade.getInativo());
 
             stmt.execute();
             stmt.close();
@@ -43,23 +45,23 @@ public class EstadoDao {
     }
 
  
-    public Estado getEstado(int id) {
+    public Cidade getCidade(int id) {
         this.connection.open();
         try {
-            PreparedStatement stmt = this.connection.getConnection().prepareStatement("Select * from vwEstado Where id = ?");
+            PreparedStatement stmt = this.connection.getConnection().prepareStatement("Select * from vwCidade Where id = ?");
             stmt.setInt(1, id);
 
             ResultSet rs = stmt.executeQuery();
-            Estado estado = new Estado();
+            Cidade cidade = new Cidade();
             
             if (rs.next()) {
-            	estado = this.carregaEstado(rs);
+            	cidade = this.carregaCidade(rs);
             }
 
             rs.close();
             stmt.close();
             connection.close();
-            return estado;
+            return cidade;
 
         } catch (SQLException e) {
             connection.close();
@@ -67,43 +69,43 @@ public class EstadoDao {
         }
     }
     
-    public List<Estado> getEstados() {
+    public List<Cidade> getCidades() {
         this.connection.open();
         try {
-            PreparedStatement stmt = this.connection.getConnection().prepareStatement("Select * from vwEstado");
+            PreparedStatement stmt = this.connection.getConnection().prepareStatement("Select * from vwCidade");
 
             ResultSet rs = stmt.executeQuery();
-            List<Estado> estados = new ArrayList<Estado>();
+            List<Cidade> cidades = new ArrayList<Cidade>();
             while (rs.next()) {
-            	Estado estado = this.carregaEstado(rs);
-                estados.add(estado);
+            	Cidade cidade = this.carregaCidade(rs);
+                cidades.add(cidade);
             }
             rs.close();
             stmt.close();
             connection.close();
-            return estados;
+            return cidades;
         } catch (SQLException e) {
             connection.close();
             throw new RuntimeException(e);
         }
     }
 
-    public List<Estado> getEstados(Pais pais) {
+    public List<Cidade> getCidades(Estado estado) {
         this.connection.open();
         try {
-            PreparedStatement stmt = this.connection.getConnection().prepareStatement("Select * from vwEstado where idPais = ?");
-            stmt.setInt(1, pais.getId());
+            PreparedStatement stmt = this.connection.getConnection().prepareStatement("Select * from vwCidade where idEstado = ?");
+            stmt.setInt(1, estado.getId());
 
             ResultSet rs = stmt.executeQuery();
-            List<Estado> estados = new ArrayList<Estado>();
+            List<Cidade> cidades = new ArrayList<Cidade>();
             while (rs.next()) {
-                Estado estado = this.carregaEstado(rs);
-                estados.add(estado);
+                Cidade cidade = this.carregaCidade(rs);
+                cidades.add(cidade);
             }
             rs.close();
             stmt.close();
             connection.close();
-            return estados;
+            return cidades;
         } catch (SQLException e) {
             connection.close();
             throw new RuntimeException(e);
@@ -111,17 +113,21 @@ public class EstadoDao {
     }
     
     
-    private Estado carregaEstado(ResultSet rs) {
-    
+    private Cidade carregaCidade(ResultSet rs) {
+    	Cidade cidade = new Cidade();
     	Estado estado = new Estado();
     	Pais pais = new Pais();
     	
         try {
-
-			estado.setId(rs.getInt("id"));
+        	
+        	cidade.setId(rs.getInt("id"));
+            cidade.setCidade(rs.getString("cidade"));
+            cidade.setSigla(rs.getString("siglaCidade"));
+            cidade.setInativo(rs.getInt("inativo"));
+            
+			estado.setId(rs.getInt("idEstado"));
 	        estado.setEstado(rs.getString("estado"));
 	        estado.setSigla(rs.getString("siglaEstado"));
-	        estado.setInativo(rs.getInt("inativo"));
 	        
 	        pais.setId(rs.getInt("idPais"));
 	        pais.setPais(rs.getString("pais"));
@@ -132,8 +138,10 @@ public class EstadoDao {
 		}
         
         estado.setPais(pais);
+        cidade.setEstado(estado);
         
-        return estado;
+        return cidade;
         		
     }
+    
 }

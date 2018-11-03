@@ -1,14 +1,18 @@
-package sp.com.senac.pi.model.cadastro;
+package sp.com.senac.pi.model.base;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Empresa {
-    private int id;
-    private String nomeFantasia;
-    private String razaoSocial;
-    private String cnpj;
-    private String dataDeCriacao;
+import sp.com.senac.pi.model.contato.Contato;
+import sp.com.senac.pi.model.localizacao.Cidade;
+
+public class Pessoa {
+	private int id;
+    private String nome;
+    private String sobrenome;
+    private String cpf;
+    private String dataDeNascimento;
+    private String sexo;
     private String logradouro;
     private String numero;
     private String complemento;
@@ -16,31 +20,31 @@ public class Empresa {
     private Cidade cidade;
     private List<Contato> contatos;
     private int inativo;
-    
-    public Empresa() {
+
+    public Pessoa() {
         this.id = 0;
-        this.nomeFantasia = "";
-        this.razaoSocial = "";
-        this.cnpj = "";
-        this.dataDeCriacao = "";
+        this.nome = "";
+        this.sobrenome = "";
+        this.cpf = "";
+        this.dataDeNascimento = "";
+        this.sexo = "";
         this.logradouro = "";
 		this.numero = "";
 		this.complemento = "";
 		this.bairro = "";
 		this.cidade = new Cidade();
-        this.contatos = new ArrayList<Contato>();;
+		this.contatos = new ArrayList<Contato>();
         this.inativo = 0;
     }
-
-	public Empresa(int id, String nomeFantasia, String razaoSocial, String cnpj, String dataDeCriacao,
-			String logradouro, String numero, String complemento, String bairro, Cidade cidade, List<Contato> contatos,
-			int inativo) {
-		super();
+    
+	public Pessoa(int id, String nome, String sobrenome, String cpf, String dataDeNascimento, String sexo, String logradouro,
+			String numero, String complemento, String bairro, Cidade cidade, List<Contato> contatos, int inativo) {
 		this.id = id;
-		this.nomeFantasia = nomeFantasia;
-		this.razaoSocial = razaoSocial;
-		this.cnpj = cnpj;
-		this.dataDeCriacao = dataDeCriacao;
+		this.nome = nome;
+		this.sobrenome = sobrenome;
+		this.cpf = cpf;
+		this.dataDeNascimento = dataDeNascimento;
+		this.sexo = sexo;
 		this.logradouro = logradouro;
 		this.numero = numero;
 		this.complemento = complemento;
@@ -58,36 +62,44 @@ public class Empresa {
 		this.id = id;
 	}
 
-	public String getNomeFantasia() {
-		return nomeFantasia;
+	public String getNome() {
+		return nome;
 	}
 
-	public void setNomeFantasia(String nomeFantasia) {
-		this.nomeFantasia = nomeFantasia;
+	public void setNome(String nome) {
+		this.nome = nome;
 	}
 
-	public String getRazaoSocial() {
-		return razaoSocial;
+	public String getSobrenome() {
+		return sobrenome;
 	}
 
-	public void setRazaoSocial(String razaoSocial) {
-		this.razaoSocial = razaoSocial;
+	public void setSobrenome(String sobrenome) {
+		this.sobrenome = sobrenome;
 	}
 
-	public String getCNPJ() {
-		return cnpj;
+	public String getCPF() {
+		return cpf;
 	}
 
-	public void setCNPJ(String cnpj) {
-		this.cnpj = cnpj;
+	public void setCPF(String cpf) {
+		this.cpf = cpf;
 	}
 
-	public String getDataDeCriacao() {
-		return dataDeCriacao;
+	public String getDataDeNascimento() {
+		return dataDeNascimento;
 	}
 
-	public void setDataDeCriacao(String dataDeCriacao) {
-		this.dataDeCriacao = dataDeCriacao;
+	public void setDataDeNascimento(String dataDeNascimento) {
+		this.dataDeNascimento = dataDeNascimento;
+	}
+	
+	public String getSexo() {
+		return sexo;
+	}
+
+	public void setSexo(String sexo) {
+		this.sexo = sexo;
 	}
 
 	public String getLogradouro() {
@@ -130,6 +142,14 @@ public class Empresa {
 		this.cidade = cidade;
 	}
 
+	public String getCpf() {
+		return cpf;
+	}
+
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
+	}
+
 	public List<Contato> getContatos() {
 		return contatos;
 	}
@@ -146,5 +166,5 @@ public class Empresa {
 		this.inativo = inativo;
 	}
 
-    
+   
 }
