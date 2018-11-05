@@ -4,30 +4,27 @@ public class Contato {
 	private int id;
     private String ddd;
     private String numero;
-    private String tipoNumero;
     private String email;
     private String site;
-    private int idPessoa;
-    private int idEmpresa;
+    private Integer idPessoa;
+    private Integer idEmpresa;
     private int inativo;
 
     public Contato() {
         this.id = 0;
         this.ddd = "";
         this.numero = "";
-        this.tipoNumero = "";
         this.email = "";
         this.site = "";
-        this.idPessoa = 0;
-        this.idEmpresa = 0;
+        this.idPessoa = null;
+        this.idEmpresa = null;
         this.inativo = 0;
     }
 
-    public Contato(int id, String ddd, String numero, String tipoNumero, String email, String site, int idPessoa, int idEmpresa, int inativo) {
+    public Contato(int id, String ddd, String numero, String email, String site, Integer idPessoa, Integer idEmpresa, int inativo) {
         this.id = id;
         this.ddd = ddd;
         this.numero = numero;
-        this.tipoNumero = tipoNumero;
         this.email = email;
         this.site = site;
         this.idPessoa = idPessoa;
@@ -59,14 +56,6 @@ public class Contato {
         this.numero = numero;
     }
 
-    public String getTipoNumero() {
-        return tipoNumero;
-    }
-
-    public void setTipoNumero(String tipoNumero) {
-        this.tipoNumero = tipoNumero;
-    }
-
     public String getEmail() {
         return email;
     }
@@ -84,19 +73,25 @@ public class Contato {
     }
     
 
-    public int getIdPessoa() {
+    public Integer getIdPessoa() {
 		return idPessoa;
 	}
 
-	public void setIdPessoa(int idPessoa) {
+	public void setIdPessoa(Integer idPessoa) {
+		if (idPessoa == 0)
+			idPessoa = null;
+		
 		this.idPessoa = idPessoa;
 	}
 
-	public int getIdEmpresa() {
+	public Integer getIdEmpresa() {
 		return idEmpresa;
 	}
 
-	public void setIdEmpresa(int idEmpresa) {
+	public void setIdEmpresa(Integer idEmpresa) {
+		if (idEmpresa == 0)
+			idEmpresa = null;
+		
 		this.idEmpresa = idEmpresa;
 	}
 

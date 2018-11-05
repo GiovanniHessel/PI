@@ -12,4 +12,9 @@ public class ConnectionSingleton {
     public static DbConnection getConnection() {
         return connection;
     }
+    
+    public static DbConnection getNewConnection() {
+        return new SqlFactory().createConnection();
+    }
+    
 }

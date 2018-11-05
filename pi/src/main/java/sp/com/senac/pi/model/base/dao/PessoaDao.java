@@ -9,7 +9,6 @@ import java.util.List;
 import sp.com.senac.pi.conexao.contratos.DbConnection;
 import sp.com.senac.pi.conexao.singleton.ConnectionSingleton;
 import sp.com.senac.pi.model.base.Pessoa;
-import sp.com.senac.pi.model.contato.Contato;
 import sp.com.senac.pi.model.contato.dao.ContatoDao;
 import sp.com.senac.pi.model.localizacao.Cidade;
 import sp.com.senac.pi.model.localizacao.Estado;
@@ -24,28 +23,11 @@ public class PessoaDao {
 
 	public Pessoa insert(Pessoa pessoa) {
 		pessoa.setId(0);
-
-		String sql = "insert into Pessoa"
-				+ "(nome, sobrenome, CPF, dataDeNascimento, sexo, logradouro, numero, complemento, bairro, idCidade, inativo)"
-				+ "Output Inserted.id as id" + " values (?,?,?,?,?,?,?,?,?,?,?)";
 		
 		this.connection.open();
 		try {
 	
-			PreparedStatement stmt = connection.getConnection().prepareStatement(sql);
-
-		
-			stmt.setString(1, pessoa.getNome());
-			stmt.setString(2, pessoa.getSobrenome());
-			stmt.setString(3, pessoa.getCPF());
-			stmt.setString(4, pessoa.getDataDeNascimento());
-			stmt.setString(5, pessoa.getSexo());
-			stmt.setString(6, pessoa.getLogradouro());
-			stmt.setString(7, pessoa.getNumero());
-			stmt.setString(8, pessoa.getComplemento());
-			stmt.setString(9, pessoa.getBairro());
-			stmt.setInt(10, pessoa.getCidade().getId());
-			stmt.setInt(11, pessoa.getInativo());
+			PreparedStatement stmt = this.carregaParametros(pessoa);
 
 			ResultSet rs = stmt.executeQuery();
 			if (rs.next()) {
@@ -60,16 +42,34 @@ public class PessoaDao {
 		}
 		connection.close();
 		
-		List<Contato> contatos = new ArrayList<Contato>();
-		for (Contato contato : pessoa.getContatos()) {
-			contato.setIdPessoa(pessoa.getId());
-			contatos.add(new ContatoDao().insert(contato));
-		}
-
-		pessoa.setContatos(contatos);
+		pessoa.setContatos(new ContatoDao().alterarContatos(pessoa));
 		return pessoa;
 	}
+	
+	public Pessoa update(Pessoa pessoa) {
 
+		this.connection.open();
+		try {
+	
+			PreparedStatement stmt = this.carregaParametros(pessoa);
+
+			ResultSet rs = stmt.executeQuery();
+			if (rs.next()) {
+				pessoa.setId(rs.getInt("id"));
+			}
+			rs.close();
+			stmt.close();
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			connection.close();
+			return pessoa;
+		}
+		connection.close();
+
+		pessoa.setContatos(new ContatoDao().alterarContatos(pessoa));
+		return pessoa;
+	}
+	
 	public Pessoa getPessoa(int id) {
 		this.connection.open();
 		try {
@@ -151,10 +151,12 @@ public class PessoaDao {
 			pessoa.setCPF(rs.getString("CPF"));
 			pessoa.setDataDeNascimento(rs.getString("dataDeNascimento"));
 			pessoa.setSexo(rs.getString("sexo"));
+			pessoa.setCep(rs.getString("cep"));
 			pessoa.setLogradouro(rs.getString("logradouro"));
 			pessoa.setNumero(rs.getString("numero"));
 			pessoa.setComplemento(rs.getString("complemento"));
 			pessoa.setBairro(rs.getString("bairro"));
+			
 			pessoa.setContatos(new ContatoDao().getContatos(pessoa));
 			pessoa.setInativo(rs.getInt("inativo"));
 			
@@ -177,5 +179,27 @@ public class PessoaDao {
 		pessoa.setCidade(cidade);
 		
 		return pessoa;
+	}
+	
+	private PreparedStatement carregaParametros(Pessoa pessoa) throws SQLException {
+		String sql = "exec SPIU_PESSOA ?,?,?,?,?,?,?,?,?,?,?,?,?";
+		
+		PreparedStatement stmt = connection.getConnection().prepareStatement(sql);
+		
+		stmt.setInt(1, pessoa.getId());
+		stmt.setString(2, pessoa.getNome());
+		stmt.setString(3, pessoa.getSobrenome());
+		stmt.setString(4, pessoa.getCPF());
+		stmt.setString(5, pessoa.getDataDeNascimento());
+		stmt.setString(6, pessoa.getSexo());
+		stmt.setString(7, pessoa.getCep());
+		stmt.setString(8, pessoa.getLogradouro());
+		stmt.setString(9, pessoa.getNumero());
+		stmt.setString(10, pessoa.getComplemento());
+		stmt.setString(11, pessoa.getBairro());
+		stmt.setInt(12, pessoa.getCidade().getId());
+		stmt.setInt(13, pessoa.getInativo());
+		
+		return stmt;
 	}
 }

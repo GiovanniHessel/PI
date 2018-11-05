@@ -9,6 +9,7 @@ import java.util.List;
 import sp.com.senac.pi.conexao.contratos.DbConnection;
 import sp.com.senac.pi.conexao.singleton.ConnectionSingleton;
 import sp.com.senac.pi.model.base.Empresa;
+import sp.com.senac.pi.model.contato.dao.ContatoDao;
 import sp.com.senac.pi.model.localizacao.Cidade;
 import sp.com.senac.pi.model.localizacao.Estado;
 import sp.com.senac.pi.model.localizacao.Pais;
@@ -23,7 +24,7 @@ public class EmpresaDao {
 	public Empresa insert(Empresa empresa) {
 		empresa.setId(0);
 
-		String sql = "exec SPIU_EMPRESA ?,?,?,?,?,?,?,?,?,?,?";
+		String sql = "exec SPIU_EMPRESA ?,?,?,?,?,?,?,?,?,?,?,?";
 
 		this.connection.open();
 		try {
@@ -33,14 +34,15 @@ public class EmpresaDao {
 			stmt.setInt(1, empresa.getId());
 			stmt.setString(2, empresa.getNomeFantasia());
 			stmt.setString(3, empresa.getRazaoSocial());
-			stmt.setString(4, empresa.getCNPJ());
+			stmt.setString(4, empresa.getCnpj());
 			stmt.setString(5, empresa.getDataDeCriacao());
-			stmt.setString(6, empresa.getLogradouro());
-			stmt.setString(7, empresa.getNumero());
-			stmt.setString(8, empresa.getComplemento());
-			stmt.setString(9, empresa.getBairro());
-			stmt.setInt(10, empresa.getCidade().getId());
-			stmt.setInt(11, empresa.getInativo());
+			stmt.setString(6, empresa.getCep());
+			stmt.setString(7, empresa.getLogradouro());
+			stmt.setString(8, empresa.getNumero());
+			stmt.setString(9, empresa.getComplemento());
+			stmt.setString(10, empresa.getBairro());
+			stmt.setInt(11, empresa.getCidade().getId());
+			stmt.setInt(12, empresa.getInativo());
 
 			ResultSet rs = stmt.executeQuery();
 			if (rs.next()) {
@@ -135,12 +137,14 @@ public class EmpresaDao {
 			empresa.setId(rs.getInt("id"));
 			empresa.setNomeFantasia(rs.getString("nomeFantasia"));
 			empresa.setRazaoSocial(rs.getString("razaoSocial"));
-			empresa.setCNPJ(rs.getString("CNPJ"));
+			empresa.setCnpj(rs.getString("CNPJ"));
 			empresa.setDataDeCriacao(rs.getString("dataDeCriacao"));
+			empresa.setCep(rs.getString("cep"));
 			empresa.setLogradouro(rs.getString("logradouro"));
 			empresa.setNumero(rs.getString("numero"));
 			empresa.setComplemento(rs.getString("complemento"));
 			empresa.setBairro(rs.getString("bairro"));
+			empresa.setContatos(new ContatoDao().getContatos(empresa));
 			empresa.setInativo(rs.getInt("inativo"));
 			
 			cidade.setId(rs.getInt("idCidade"));

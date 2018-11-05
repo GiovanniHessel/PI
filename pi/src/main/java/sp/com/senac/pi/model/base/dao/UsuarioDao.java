@@ -8,6 +8,7 @@ import sp.com.senac.pi.conexao.contratos.DbConnection;
 import sp.com.senac.pi.conexao.singleton.ConnectionSingleton;
 import sp.com.senac.pi.model.base.Pessoa;
 import sp.com.senac.pi.model.base.Usuario;
+import sp.com.senac.pi.model.contato.dao.ContatoDao;
 import sp.com.senac.pi.model.localizacao.Cidade;
 import sp.com.senac.pi.model.localizacao.Estado;
 import sp.com.senac.pi.model.localizacao.Pais;
@@ -24,22 +25,12 @@ public class UsuarioDao {
 
 		usuario.setId(0);
 		
-		String sql = "insert into Usuario" 
-				+ "(login, chave, inativo, idPessoa)" 
-				+ "Output Inserted.id as id"
-				+ " values (?,?,?,?)";
-		
 		usuario.setPessoa(new PessoaDao().insert(usuario.getPessoa()));
 		
 		this.connection.open();
 		try {
 
-			PreparedStatement stmt = connection.getConnection().prepareStatement(sql);
-
-			stmt.setString(1, usuario.getLogin());
-			stmt.setString(2, new Seguranca().hash(usuario.getChave()));
-			stmt.setInt(3, usuario.getInativo());
-			stmt.setInt(4, usuario.getPessoa().getId());
+			PreparedStatement stmt = this.carregaParametros(usuario);
 		
 			ResultSet rs = stmt.executeQuery();
 			if (rs.next()) {
@@ -54,6 +45,54 @@ public class UsuarioDao {
 		}
 		connection.close();
 		return usuario;
+	}
+	
+	public Usuario update(Usuario usuario) {
+		
+		usuario.setPessoa(new PessoaDao().update(usuario.getPessoa()));
+		
+		this.connection.open();
+		try {
+
+			PreparedStatement stmt = this.carregaParametros(usuario);
+		
+			ResultSet rs = stmt.executeQuery();
+			if (rs.next()) {
+				usuario.setId(rs.getInt("id"));
+			}
+			rs.close();
+			stmt.close();
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			connection.close();
+			return usuario;
+		}
+		connection.close();
+		return usuario;
+	}
+	
+	public Usuario delete(Usuario usuario) {
+		this.connection.open();
+		try {
+			PreparedStatement stmt = this.connection.getConnection()
+					.prepareStatement("SPD_USUARIO ?");
+			stmt.setInt(1, usuario.getId());
+
+			ResultSet rs = stmt.executeQuery();
+	
+			if (rs.next()) {
+				usuario.setId(rs.getInt("id"));
+			}
+
+			rs.close();
+			stmt.close();
+			connection.close();
+			return usuario;
+
+		} catch (SQLException e) {
+			connection.close();
+			throw new RuntimeException(e);
+		}
 	}
 	
 	public Usuario getUsuario(int id) {
@@ -129,6 +168,7 @@ public class UsuarioDao {
 			pessoa.setNumero(rs.getString("numero"));
 			pessoa.setComplemento(rs.getString("complemento"));
 			pessoa.setBairro(rs.getString("bairro"));
+			pessoa.setContatos(new ContatoDao().getContatos(pessoa));
 			
 			cidade.setId(rs.getInt("idCidade"));
 			cidade.setCidade(rs.getString("cidade"));
@@ -152,5 +192,20 @@ public class UsuarioDao {
         usuario.setPessoa(pessoa);
         
         return usuario;
+	}
+	
+	private PreparedStatement carregaParametros(Usuario usuario) throws SQLException {
+		String sql = "exec SPIU_USUARIO ?,?,?,?,?";
+		
+		PreparedStatement stmt = connection.getConnection().prepareStatement(sql);
+		
+		stmt.setInt(1, usuario.getId());
+		stmt.setInt(2, usuario.getPessoa().getId());
+		stmt.setString(3, usuario.getLogin());
+		stmt.setString(4, new Seguranca().hash(usuario.getChave()));
+		stmt.setInt(5, usuario.getInativo());
+		
+		
+		return stmt;
 	}
 }

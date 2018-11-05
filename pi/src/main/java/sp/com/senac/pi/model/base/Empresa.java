@@ -12,6 +12,7 @@ public class Empresa {
     private String razaoSocial;
     private String cnpj;
     private String dataDeCriacao;
+    private String cep;
     private String logradouro;
     private String numero;
     private String complemento;
@@ -26,6 +27,7 @@ public class Empresa {
         this.razaoSocial = "";
         this.cnpj = "";
         this.dataDeCriacao = "";
+        this.cep = "";
         this.logradouro = "";
 		this.numero = "";
 		this.complemento = "";
@@ -35,7 +37,7 @@ public class Empresa {
         this.inativo = 0;
     }
 
-	public Empresa(int id, String nomeFantasia, String razaoSocial, String cnpj, String dataDeCriacao,
+	public Empresa(int id, String nomeFantasia, String razaoSocial, String cnpj, String dataDeCriacao, String cep,
 			String logradouro, String numero, String complemento, String bairro, Cidade cidade, List<Contato> contatos,
 			int inativo) {
 		super();
@@ -44,6 +46,7 @@ public class Empresa {
 		this.razaoSocial = razaoSocial;
 		this.cnpj = cnpj;
 		this.dataDeCriacao = dataDeCriacao;
+		this.cep = "";
 		this.logradouro = logradouro;
 		this.numero = numero;
 		this.complemento = complemento;
@@ -77,11 +80,11 @@ public class Empresa {
 		this.razaoSocial = razaoSocial;
 	}
 
-	public String getCNPJ() {
+	public String getCnpj() {
 		return cnpj;
 	}
 
-	public void setCNPJ(String cnpj) {
+	public void setCnpj(String cnpj) {
 		this.cnpj = cnpj;
 	}
 
@@ -91,6 +94,14 @@ public class Empresa {
 
 	public void setDataDeCriacao(String dataDeCriacao) {
 		this.dataDeCriacao = dataDeCriacao;
+	}
+	
+	public String getCep() {
+		return cep;
+	}
+
+	public void setCep(String cep) {
+		this.cep = cep;
 	}
 
 	public String getLogradouro() {
