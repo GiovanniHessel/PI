@@ -1,4 +1,4 @@
-package sp.com.senac.pi.servicos;
+package sp.com.senac.pi.servicos.base;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -9,8 +9,8 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import sp.com.senac.pi.model.base.Usuario;
-import sp.com.senac.pi.model.base.dao.UsuarioDao;
+import sp.com.senac.pi.model.dao.base.UsuarioDao;
+import sp.com.senac.pi.model.pojo.base.Usuario;
 
 
 @Path("/usuario")

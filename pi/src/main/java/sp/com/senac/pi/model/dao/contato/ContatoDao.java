@@ -1,4 +1,4 @@
-package sp.com.senac.pi.model.contato.dao;
+package sp.com.senac.pi.model.dao.contato;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,9 +9,9 @@ import java.util.List;
 
 import sp.com.senac.pi.conexao.contratos.DbConnection;
 import sp.com.senac.pi.conexao.singleton.ConnectionSingleton;
-import sp.com.senac.pi.model.base.Empresa;
-import sp.com.senac.pi.model.base.Pessoa;
-import sp.com.senac.pi.model.contato.Contato;
+import sp.com.senac.pi.model.pojo.base.Empresa;
+import sp.com.senac.pi.model.pojo.base.Pessoa;
+import sp.com.senac.pi.model.pojo.contato.Contato;
 
 public class ContatoDao {
 	private DbConnection connection;

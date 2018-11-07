@@ -1,4 +1,4 @@
-package sp.com.senac.pi.model.localizacao.dao;
+package sp.com.senac.pi.model.dao.localizacao;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -8,7 +8,7 @@ import java.util.List;
 
 import sp.com.senac.pi.conexao.contratos.DbConnection;
 import sp.com.senac.pi.conexao.singleton.ConnectionSingleton;
-import sp.com.senac.pi.model.localizacao.Pais;
+import sp.com.senac.pi.model.pojo.localizacao.Pais;
 
 public class PaisDao {
 	private DbConnection connection;

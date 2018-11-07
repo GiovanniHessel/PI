@@ -1,4 +1,4 @@
-package sp.com.senac.pi.seguranca.control;
+package sp.com.senac.pi.control.seguranca;
 
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;

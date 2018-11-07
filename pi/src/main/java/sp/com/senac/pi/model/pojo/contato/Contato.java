@@ -1,4 +1,4 @@
-package sp.com.senac.pi.model.contato;
+package sp.com.senac.pi.model.pojo.contato;
 
 public class Contato {
 	private int id;

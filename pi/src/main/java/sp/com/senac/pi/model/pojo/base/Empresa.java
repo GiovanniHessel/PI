@@ -1,18 +1,17 @@
-package sp.com.senac.pi.model.base;
+package sp.com.senac.pi.model.pojo.base;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import sp.com.senac.pi.model.contato.Contato;
-import sp.com.senac.pi.model.localizacao.Cidade;
+import sp.com.senac.pi.model.pojo.contato.Contato;
+import sp.com.senac.pi.model.pojo.localizacao.Cidade;
 
-public class Pessoa {
-	private int id;
-    private String nome;
-    private String sobrenome;
-    private String cpf;
-    private String dataDeNascimento;
-    private String sexo;
+public class Empresa {
+    private int id;
+    private String nomeFantasia;
+    private String razaoSocial;
+    private String cnpj;
+    private String dataDeCriacao;
     private String cep;
     private String logradouro;
     private String numero;
@@ -21,33 +20,33 @@ public class Pessoa {
     private Cidade cidade;
     private List<Contato> contatos;
     private int inativo;
-
-    public Pessoa() {
+    
+    public Empresa() {
         this.id = 0;
-        this.nome = "";
-        this.sobrenome = "";
-        this.cpf = "";
-        this.dataDeNascimento = "";
-        this.sexo = "";
+        this.nomeFantasia = "";
+        this.razaoSocial = "";
+        this.cnpj = "";
+        this.dataDeCriacao = "";
         this.cep = "";
         this.logradouro = "";
 		this.numero = "";
 		this.complemento = "";
 		this.bairro = "";
 		this.cidade = new Cidade();
-		this.contatos = new ArrayList<Contato>();
+        this.contatos = new ArrayList<Contato>();;
         this.inativo = 0;
     }
-    
-	public Pessoa(int id, String nome, String sobrenome, String cpf, String dataDeNascimento, String sexo, String cep, String logradouro,
-			String numero, String complemento, String bairro, Cidade cidade, List<Contato> contatos, int inativo) {
+
+	public Empresa(int id, String nomeFantasia, String razaoSocial, String cnpj, String dataDeCriacao, String cep,
+			String logradouro, String numero, String complemento, String bairro, Cidade cidade, List<Contato> contatos,
+			int inativo) {
+		super();
 		this.id = id;
-		this.nome = nome;
-		this.sobrenome = sobrenome;
-		this.cpf = cpf;
-		this.dataDeNascimento = dataDeNascimento;
-		this.sexo = sexo;
-		this.cep = cep;
+		this.nomeFantasia = nomeFantasia;
+		this.razaoSocial = razaoSocial;
+		this.cnpj = cnpj;
+		this.dataDeCriacao = dataDeCriacao;
+		this.cep = "";
 		this.logradouro = logradouro;
 		this.numero = numero;
 		this.complemento = complemento;
@@ -65,44 +64,36 @@ public class Pessoa {
 		this.id = id;
 	}
 
-	public String getNome() {
-		return nome;
+	public String getNomeFantasia() {
+		return nomeFantasia;
 	}
 
-	public void setNome(String nome) {
-		this.nome = nome;
+	public void setNomeFantasia(String nomeFantasia) {
+		this.nomeFantasia = nomeFantasia;
 	}
 
-	public String getSobrenome() {
-		return sobrenome;
+	public String getRazaoSocial() {
+		return razaoSocial;
 	}
 
-	public void setSobrenome(String sobrenome) {
-		this.sobrenome = sobrenome;
+	public void setRazaoSocial(String razaoSocial) {
+		this.razaoSocial = razaoSocial;
 	}
 
-	public String getCPF() {
-		return cpf;
+	public String getCnpj() {
+		return cnpj;
 	}
 
-	public void setCPF(String cpf) {
-		this.cpf = cpf;
+	public void setCnpj(String cnpj) {
+		this.cnpj = cnpj;
 	}
 
-	public String getDataDeNascimento() {
-		return dataDeNascimento;
+	public String getDataDeCriacao() {
+		return dataDeCriacao;
 	}
 
-	public void setDataDeNascimento(String dataDeNascimento) {
-		this.dataDeNascimento = dataDeNascimento;
-	}
-	
-	public String getSexo() {
-		return sexo;
-	}
-
-	public void setSexo(String sexo) {
-		this.sexo = sexo;
+	public void setDataDeCriacao(String dataDeCriacao) {
+		this.dataDeCriacao = dataDeCriacao;
 	}
 	
 	public String getCep() {
@@ -153,14 +144,6 @@ public class Pessoa {
 		this.cidade = cidade;
 	}
 
-	public String getCpf() {
-		return cpf;
-	}
-
-	public void setCpf(String cpf) {
-		this.cpf = cpf;
-	}
-
 	public List<Contato> getContatos() {
 		return contatos;
 	}
@@ -177,5 +160,5 @@ public class Pessoa {
 		this.inativo = inativo;
 	}
 
-   
+    
 }

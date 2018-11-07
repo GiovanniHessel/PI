@@ -1,4 +1,4 @@
-package sp.com.senac.pi.model.base.dao;
+package sp.com.senac.pi.model.dao.base;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -8,11 +8,11 @@ import java.util.List;
 
 import sp.com.senac.pi.conexao.contratos.DbConnection;
 import sp.com.senac.pi.conexao.singleton.ConnectionSingleton;
-import sp.com.senac.pi.model.base.Pessoa;
-import sp.com.senac.pi.model.contato.dao.ContatoDao;
-import sp.com.senac.pi.model.localizacao.Cidade;
-import sp.com.senac.pi.model.localizacao.Estado;
-import sp.com.senac.pi.model.localizacao.Pais;
+import sp.com.senac.pi.model.dao.contato.ContatoDao;
+import sp.com.senac.pi.model.pojo.base.Pessoa;
+import sp.com.senac.pi.model.pojo.localizacao.Cidade;
+import sp.com.senac.pi.model.pojo.localizacao.Estado;
+import sp.com.senac.pi.model.pojo.localizacao.Pais;
 
 public class PessoaDao {
 	private DbConnection connection;

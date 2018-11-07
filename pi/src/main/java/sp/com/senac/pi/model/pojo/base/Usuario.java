@@ -1,4 +1,4 @@
-package sp.com.senac.pi.model.base;
+package sp.com.senac.pi.model.pojo.base;
 
 public class Usuario {
 	private int id;
