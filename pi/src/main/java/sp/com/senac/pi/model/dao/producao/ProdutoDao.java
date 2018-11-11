@@ -43,8 +43,8 @@ public class ProdutoDao {
 		}
 		connection.close();
 		
-		produto.setPrecos(new PrecoDao().insertPrecos(produto.getPrecos()));
-		produto.setCustos(new CustoDao().insertCustos(produto.getCustos()));
+		produto.setPrecos(new PrecoDao().insertPrecos(produto));
+		produto.setCustos(new CustoDao().insertCustos(produto));
 		produto.setEstoques(new EstoqueDao().estoqueInicial(produto));
 		
 		return produto;
@@ -70,8 +70,33 @@ public class ProdutoDao {
 		}
 		connection.close();
 
-		produto.setPrecos(new PrecoDao().insertPrecos(produto.getPrecos()));
-		produto.setCustos(new CustoDao().insertCustos(produto.getCustos()));
+		produto.setPrecos(new PrecoDao().insertPrecos(produto));
+		produto.setCustos(new CustoDao().insertCustos(produto));
+		
+		return produto;
+	}
+	
+	public Produto delete(Produto produto) {
+
+		this.connection.open();
+		try {
+	
+			PreparedStatement stmt = this.connection.getConnection().prepareStatement("exec SPD_PRODUTO ?");
+			stmt.setInt(1, produto.getId());
+
+			ResultSet rs = stmt.executeQuery();
+			if (rs.next()) {
+				produto.setId(rs.getInt("id"));
+			}
+			
+			rs.close();
+			stmt.close();
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			connection.close();
+			return produto;
+		}
+		connection.close();
 		
 		return produto;
 	}
@@ -125,16 +150,10 @@ public class ProdutoDao {
 	public List<Produto> getProdutos() {
 		this.connection.open();
 		try {
-			PreparedStatement stmt = this.connection.getConnection().prepareStatement("select * from Producao.Produto");
+			PreparedStatement stmt = this.connection.getConnection().prepareStatement("select top 100 * from Producao.Produto");
 
-			ResultSet rs = stmt.executeQuery();
-			List<Produto> produtos = new ArrayList<Produto>();
+			List<Produto> produtos = this.retornaProdutos(stmt);
 			
-			while (rs.next()) {
-				Produto produto = this.carregaProduto(rs);
-				produtos.add(produto);
-			}
-			rs.close();
 			stmt.close();
 			connection.close();
 			return produtos;
@@ -147,16 +166,10 @@ public class ProdutoDao {
 	public List<Produto> getProdutosAtuais() {
 		this.connection.open();
 		try {
-			PreparedStatement stmt = this.connection.getConnection().prepareStatement("select * from Producao.vwProduto");
+			PreparedStatement stmt = this.connection.getConnection().prepareStatement("select top 100 * from Producao.vwProduto");
 
-			ResultSet rs = stmt.executeQuery();
-			List<Produto> produtos = new ArrayList<Produto>();
+			List<Produto> produtos = this.retornaProdutosAtuais(stmt);
 			
-			while (rs.next()) {
-				Produto produto = this.carregaProdutoAtual(rs);
-				produtos.add(produto);
-			}
-			rs.close();
 			stmt.close();
 			connection.close();
 			return produtos;
@@ -166,19 +179,13 @@ public class ProdutoDao {
 		}
 	}
 	
-	public List<Produto> getProdutos(String nome) {
+	public List<Produto> getProdutosNome(String nome) {
 		this.connection.open();
 		try {
-			PreparedStatement stmt = this.connection.getConnection().prepareStatement("select * from Producao.Produto where nome like '%" + nome + "%'");
-
-			ResultSet rs = stmt.executeQuery();
-			List<Produto> produtos = new ArrayList<Produto>();
+			PreparedStatement stmt = this.connection.getConnection().prepareStatement("select * from Producao.Produto where nome like '%"+nome+"%'");
 			
-			while (rs.next()) {
-				Produto produto = this.carregaProduto(rs);
-				produtos.add(produto);
-			}
-			rs.close();
+			List<Produto> produtos = this.retornaProdutos(stmt);
+			
 			stmt.close();
 			connection.close();
 			return produtos;
@@ -188,19 +195,13 @@ public class ProdutoDao {
 		}
 	}
 	
-	public List<Produto> getProdutosAtuais(String nome) {
+	public List<Produto> getProdutosAtuaisNome(String nome) {
 		this.connection.open();
 		try {
-			PreparedStatement stmt = this.connection.getConnection().prepareStatement("select * from Producao.vwProduto where nome like '%" + nome + "%'");
-
-			ResultSet rs = stmt.executeQuery();
-			List<Produto> produtos = new ArrayList<Produto>();
+			PreparedStatement stmt = this.connection.getConnection().prepareStatement("select * from Producao.vwProduto where nome like '%"+nome+"%'");
 			
-			while (rs.next()) {
-				Produto produto = this.carregaProdutoAtual(rs);
-				produtos.add(produto);
-			}
-			rs.close();
+			List<Produto> produtos = this.retornaProdutosAtuais(stmt);
+			
 			stmt.close();
 			connection.close();
 			return produtos;
@@ -299,6 +300,42 @@ public class ProdutoDao {
 		stmt.setInt(10, produto.getInativo());
 		
 		return stmt;
+	}
+	
+	private List<Produto> retornaProdutos(PreparedStatement stmt){
+		List<Produto> produtos = new ArrayList<Produto>();
+		
+		try {
+			ResultSet rs = stmt.executeQuery();
+			
+			while (rs.next()) {
+				Produto produto = this.carregaProduto(rs);
+				produtos.add(produto);
+			}
+			rs.close();
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+		
+		return produtos;
+	}
+	
+	private List<Produto> retornaProdutosAtuais(PreparedStatement stmt){
+		List<Produto> produtos = new ArrayList<Produto>();
+		
+		try {
+			ResultSet rs = stmt.executeQuery();
+			
+			while (rs.next()) {
+				Produto produto = this.carregaProdutoAtual(rs);
+				produtos.add(produto);
+			}
+			rs.close();
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+		
+		return produtos;
 	}
 	
 }

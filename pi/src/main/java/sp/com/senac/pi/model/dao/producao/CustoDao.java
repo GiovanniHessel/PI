@@ -79,7 +79,13 @@ public class CustoDao {
         		
 	            PreparedStatement stmt = this.carregaParametros(custo);
 	            
-	            stmt.execute();
+	            ResultSet rs = stmt.executeQuery();
+				if (rs.next()) {
+					custo.setId(rs.getInt("id"));
+				}
+				
+	            rs.close();
+	            
 	            stmt.close();
         	}
         } catch (SQLException e) {
@@ -92,26 +98,32 @@ public class CustoDao {
         return custos;
     }
     
-    public List<Custo> insertCustos(List<Custo> custos) {
+    public List<Custo> insertCustos(Produto produto) {
         
         connection.open();
         try {
         	
-        	for (Custo custo : custos) {
+        	for (Custo custo : produto.getCustos()) {
         		
         		if (custo.getId() == 0) {
+        			custo.setIdProduto(produto.getId());
 		            PreparedStatement stmt = this.carregaParametros(custo);
-		            stmt.execute();
+		            ResultSet rs = stmt.executeQuery();
+					if (rs.next()) {
+						custo.setId(rs.getInt("id"));
+					}
+					
+		            rs.close();
 		            stmt.close();
         		}
         	}
         } catch (SQLException e) {
             System.out.println(e.getMessage());
             connection.close();
-            return custos;
+            return produto.getCustos();
         }
         connection.close();
-        return custos;
+        return produto.getCustos();
     }
     
     public List<Custo> update(List<Custo> custos) {
@@ -124,7 +136,13 @@ public class CustoDao {
         		
 	            PreparedStatement stmt = this.carregaParametros(custo);
 	            
-	            stmt.execute();
+	            ResultSet rs = stmt.executeQuery();
+				if (rs.next()) {
+					custo.setId(rs.getInt("id"));
+				}
+				
+	            rs.close();
+	            
 	            stmt.close();
         	}
         } catch (SQLException e) {
@@ -285,7 +303,7 @@ public class CustoDao {
     }
     
     private PreparedStatement carregaParametros(Custo custo) throws SQLException {
-    	String sql = "exec SPIU_CUSTO ?,?,?,?";
+    	String sql = "exec Producao.SPIU_CUSTO ?,?,?,?";
     	
     	PreparedStatement stmt = connection.getConnection().prepareStatement(sql);
 

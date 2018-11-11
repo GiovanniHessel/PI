@@ -78,8 +78,13 @@ public class PrecoDao {
         		preco.setId(0);
         		
 	            PreparedStatement stmt = this.carregaParametros(preco);
-	            
-	            stmt.execute();
+	           
+	            ResultSet rs = stmt.executeQuery();
+				if (rs.next()) {
+					preco.setId(rs.getInt("id"));
+				}
+				
+	            rs.close();
 	            stmt.close();
         	}
         } catch (SQLException e) {
@@ -92,16 +97,23 @@ public class PrecoDao {
         return precos;
     }
     
-    public List<Preco> insertPrecos(List<Preco> precos) {
+    public List<Preco> insertPrecos(Produto produto) {
         
         connection.open();
         try {
         	
-        	for (Preco preco : precos) {
+        	for (Preco preco : produto.getPrecos()) {
         		
         		if (preco.getId() == 0) {
+        			preco.setIdProduto(produto.getId());
 		            PreparedStatement stmt = this.carregaParametros(preco);
-		            stmt.execute();
+		            ResultSet rs = stmt.executeQuery();
+					if (rs.next()) {
+						preco.setId(rs.getInt("id"));
+					}
+					
+		            rs.close();
+		            
 		            stmt.close();
         		}
         	}
@@ -109,10 +121,10 @@ public class PrecoDao {
             System.out.println(e.getMessage());
             System.out.println("Insert List");
             connection.close();
-            return precos;
+            return produto.getPrecos();
         }
         connection.close();
-        return precos;
+        return produto.getPrecos();
     }
     
     public List<Preco> update(List<Preco> precos) {
@@ -125,7 +137,13 @@ public class PrecoDao {
         		
 	            PreparedStatement stmt = this.carregaParametros(preco);
 	            
-	            stmt.execute();
+	            ResultSet rs = stmt.executeQuery();
+				if (rs.next()) {
+					preco.setId(rs.getInt("id"));
+				}
+				
+	            rs.close();
+	            
 	            stmt.close();
         	}
         } catch (SQLException e) {
@@ -287,7 +305,7 @@ public class PrecoDao {
     }
     
     private PreparedStatement carregaParametros(Preco preco) throws SQLException {
-    	String sql = "exec SPIU_PRECO ?,?,?,?";
+    	String sql = "exec Producao.SPIU_PRECO ?,?,?,?";
     	
     	PreparedStatement stmt = connection.getConnection().prepareStatement(sql);
 

@@ -321,7 +321,7 @@ public class EstoqueDao {
     }
     
     private PreparedStatement carregaParametros(Estoque estoque) throws SQLException {
-    	String sql = "exec SPIU_ESTOQUE ?,?,?,?,?";
+    	String sql = "exec Producao.SPIU_ESTOQUE ?,?,?,?,?";
     	
     	PreparedStatement stmt = connection.getConnection().prepareStatement(sql);
 
