@@ -13,6 +13,7 @@ import sp.com.senac.pi.model.pojo.base.Empresa;
 import sp.com.senac.pi.model.pojo.localizacao.Cidade;
 import sp.com.senac.pi.model.pojo.localizacao.Estado;
 import sp.com.senac.pi.model.pojo.localizacao.Pais;
+import sp.com.senac.pi.util.control.Util;
 
 public class EmpresaDao {
 	private DbConnection connection;
@@ -138,7 +139,7 @@ public class EmpresaDao {
 			empresa.setNomeFantasia(rs.getString("nomeFantasia"));
 			empresa.setRazaoSocial(rs.getString("razaoSocial"));
 			empresa.setCnpj(rs.getString("CNPJ"));
-			empresa.setDataDeCriacao(rs.getString("dataDeCriacao"));
+			empresa.setDataDeCriacao(new Util().getStringDate(rs.getTimestamp("dataDeCriacao")));
 			empresa.setCep(rs.getString("cep"));
 			empresa.setLogradouro(rs.getString("logradouro"));
 			empresa.setNumero(rs.getString("numero"));

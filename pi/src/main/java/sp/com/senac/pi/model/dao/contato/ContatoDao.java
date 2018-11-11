@@ -118,7 +118,7 @@ public class ContatoDao {
     public Contato delete(Contato contato) {
     	 this.connection.open();
          try {
-             PreparedStatement stmt = this.connection.getConnection().prepareStatement("SPD_CONTATO ?");
+             PreparedStatement stmt = this.connection.getConnection().prepareStatement("exec SPD_CONTATO ?");
              stmt.setInt(1, contato.getId());
 
              ResultSet rs = stmt.executeQuery();

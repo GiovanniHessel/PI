@@ -2,7 +2,6 @@ package sp.com.senac.pi.servicos.base;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
-import javax.ws.rs.FormParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -12,10 +11,8 @@ import javax.ws.rs.core.MediaType;
 import sp.com.senac.pi.model.dao.base.UsuarioDao;
 import sp.com.senac.pi.model.pojo.base.Usuario;
 
-
 @Path("/usuario")
 public class ServicoUsuario {
-	
 	
 	@POST
 	@Path("id")
@@ -30,10 +27,10 @@ public class ServicoUsuario {
 	@POST
 	@Path("signin")
 	@Produces(MediaType.APPLICATION_JSON)
-	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-	public Usuario validar(@FormParam("login") String login, @FormParam("chave") String chave) {
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Usuario validar(Usuario usuario) {
 		
-		return new UsuarioDao().getUsuario(login, chave);
+		return new UsuarioDao().getUsuario(usuario.getLogin(), usuario.getChave());
 	}
 	
 	@POST

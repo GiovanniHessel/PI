@@ -13,6 +13,7 @@ import sp.com.senac.pi.model.pojo.base.Pessoa;
 import sp.com.senac.pi.model.pojo.localizacao.Cidade;
 import sp.com.senac.pi.model.pojo.localizacao.Estado;
 import sp.com.senac.pi.model.pojo.localizacao.Pais;
+import sp.com.senac.pi.util.control.Util;
 
 public class PessoaDao {
 	private DbConnection connection;
@@ -149,7 +150,8 @@ public class PessoaDao {
 			pessoa.setNome(rs.getString("nome"));
 			pessoa.setSobrenome(rs.getString("sobreNome"));
 			pessoa.setCPF(rs.getString("CPF"));
-			pessoa.setDataDeNascimento(rs.getString("dataDeNascimento"));
+			
+			pessoa.setDataDeNascimento(new Util().getStringDate(rs.getTimestamp("dataDeNascimento")));
 			pessoa.setSexo(rs.getString("sexo"));
 			pessoa.setCep(rs.getString("cep"));
 			pessoa.setLogradouro(rs.getString("logradouro"));
