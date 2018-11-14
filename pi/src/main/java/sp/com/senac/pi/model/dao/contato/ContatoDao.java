@@ -291,7 +291,6 @@ public class ContatoDao {
 	        contato.setSite(rs.getString("site"));
 	        contato.setIdPessoa(rs.getInt("idPessoa"));
 	        contato.setIdEmpresa(rs.getInt("idEmpresa"));
-	        contato.setInativo(rs.getInt("inativo"));
 	       
         } catch (SQLException e) {
         	throw new RuntimeException(e);
@@ -302,7 +301,7 @@ public class ContatoDao {
     }
     
     private PreparedStatement carregaParametros(Contato contato) throws SQLException {
-    	String sql = "exec SPIU_CONTATO ?,?,?,?,?,?,?,?";
+    	String sql = "exec SPIU_CONTATO ?,?,?,?,?,?,?";
     	
     	PreparedStatement stmt = connection.getConnection().prepareStatement(sql);
 
@@ -323,8 +322,6 @@ public class ContatoDao {
         }else {
         	 stmt.setInt(7, contato.getIdEmpresa());
         }
-        
-        stmt.setInt(8, contato.getInativo());
         
         return stmt;
     }

@@ -8,7 +8,6 @@ public class Contato {
     private String site;
     private Integer idPessoa;
     private Integer idEmpresa;
-    private int inativo;
 
     public Contato() {
         this.id = 0;
@@ -18,10 +17,9 @@ public class Contato {
         this.site = "";
         this.idPessoa = null;
         this.idEmpresa = null;
-        this.inativo = 0;
     }
 
-    public Contato(int id, String ddd, String numero, String email, String site, Integer idPessoa, Integer idEmpresa, int inativo) {
+    public Contato(int id, String ddd, String numero, String email, String site, Integer idPessoa, Integer idEmpresa) {
         this.id = id;
         this.ddd = ddd;
         this.numero = numero;
@@ -29,7 +27,6 @@ public class Contato {
         this.site = site;
         this.idPessoa = idPessoa;
         this.idEmpresa = idEmpresa;
-        this.inativo = inativo;
     }
 
     public int getId() {
@@ -94,12 +91,4 @@ public class Contato {
 		
 		this.idEmpresa = idEmpresa;
 	}
-
-	public int getInativo() {
-        return inativo;
-    }
-
-    public void setInativo(int inativo) {
-        this.inativo = inativo;
-    }
 }

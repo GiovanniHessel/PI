@@ -19,7 +19,7 @@ public class EstadoDao {
     }
     
     public boolean insert(Estado estado) {
-        String sql = "exec spiu_estado (?,?,?,?,?)";
+        String sql = "exec spiu_estado (?,?,?,?)";
         connection.open();
         try {
 
@@ -29,7 +29,6 @@ public class EstadoDao {
             stmt.setString(2, estado.getEstado());
             stmt.setString(3, estado.getSigla());
             stmt.setInt(4, estado.getPais().getId());
-            stmt.setInt(5, estado.getInativo());
 
             stmt.execute();
             stmt.close();
@@ -121,7 +120,6 @@ public class EstadoDao {
 			estado.setId(rs.getInt("id"));
 	        estado.setEstado(rs.getString("estado"));
 	        estado.setSigla(rs.getString("siglaEstado"));
-	        estado.setInativo(rs.getInt("inativo"));
 	        
 	        pais.setId(rs.getInt("idPais"));
 	        pais.setPais(rs.getString("pais"));

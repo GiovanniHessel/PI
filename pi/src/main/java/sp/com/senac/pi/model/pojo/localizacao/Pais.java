@@ -4,20 +4,17 @@ public class Pais {
 	private int id;
     private String pais;
     private String sigla;
-    private int inativo;
 
     public Pais() {
         this.id = 0;
         this.pais = "";
         this.sigla = "";
-        this.inativo = 0;
     }
 
-    public Pais(int id, String pais, String sigla, int inativo) {
+    public Pais(int id, String pais, String sigla) {
         this.id = id;
         this.pais = pais;
         this.sigla = sigla;
-        this.inativo = inativo;
     }
 
     public int getId() {
@@ -42,13 +39,5 @@ public class Pais {
 
     public void setSigla(String sigla) {
         this.sigla = sigla;
-    }
-
-    public int getInativo() {
-        return inativo;
-    }
-
-    public void setInativo(int inativo) {
-        this.inativo = inativo;
     }
 }

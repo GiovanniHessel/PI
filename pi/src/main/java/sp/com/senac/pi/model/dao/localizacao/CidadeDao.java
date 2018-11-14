@@ -21,8 +21,8 @@ public class CidadeDao {
     
     public boolean insert(Cidade cidade) {
         String sql = "insert into Cidades"
-                + "(cidade, sigla, idEstado, inativo)"
-                + " values (?,?,?,?)";
+                + "(cidade, sigla, idEstado)"
+                + " values (?,?,?)";
         connection.open();
         try {
 
@@ -31,7 +31,6 @@ public class CidadeDao {
             stmt.setString(1, cidade.getCidade());
             stmt.setString(2, cidade.getSigla());
             stmt.setInt(3, cidade.getEstado().getId());
-            stmt.setInt(4, cidade.getInativo());
 
             stmt.execute();
             stmt.close();
@@ -123,7 +122,6 @@ public class CidadeDao {
         	cidade.setId(rs.getInt("id"));
             cidade.setCidade(rs.getString("cidade"));
             cidade.setSigla(rs.getString("siglaCidade"));
-            cidade.setInativo(rs.getInt("inativo"));
             
 			estado.setId(rs.getInt("idEstado"));
 	        estado.setEstado(rs.getString("estado"));

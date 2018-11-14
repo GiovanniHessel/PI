@@ -18,7 +18,7 @@ public class PaisDao {
     }
     
     public boolean insert(Pais pais) {
-        String sql = "exec spiu_pais (?,?,?,?)";
+        String sql = "exec spiu_pais (?,?,?)";
         connection.open();
         try {
 
@@ -27,7 +27,6 @@ public class PaisDao {
             stmt.setInt(1, pais.getId());
             stmt.setString(2, pais.getPais());
             stmt.setString(3, pais.getSigla());
-            stmt.setInt(4, pais.getInativo());
    
             stmt.execute();
             stmt.close();
@@ -94,7 +93,6 @@ public class PaisDao {
 	        pais.setId(rs.getInt("id"));
 	        pais.setPais(rs.getString("pais"));
 	        pais.setSigla(rs.getString("sigla"));
-	        pais.setInativo(rs.getInt("inativo"));
         
         } catch (SQLException e) {
         	throw new RuntimeException(e);

@@ -5,22 +5,19 @@ public class Cidade {
     private String cidade;
     private String sigla;    
     private Estado estado;
-    private int inativo;
 
     public Cidade() {
         this.id = 0;
         this.cidade = "";
         this.sigla = "";
         this.estado = new Estado();
-        this.inativo = 0;
     }
     
-    public Cidade(int id, String cidade, String sigla, Estado estado, int inativo) {
+    public Cidade(int id, String cidade, String sigla, Estado estado) {
         this.id = id;
         this.cidade = cidade;
         this.sigla = sigla;
         this.estado = estado;
-        this.inativo = inativo;
     }
 
     public int getId() {
@@ -55,12 +52,4 @@ public class Cidade {
         this.estado = estado;
     }
 
-
-    public int getInativo() {
-        return inativo;
-    }
-
-    public void setInativo(int inativo) {
-        this.inativo = inativo;
-    }
 }
