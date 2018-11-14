@@ -1,7 +1,10 @@
 package sp.com.senac.pi.servicos.base;
 
+import java.util.List;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -13,6 +16,16 @@ import sp.com.senac.pi.model.pojo.base.Usuario;
 
 @Path("/usuario")
 public class ServicoUsuario {
+	
+	
+	@GET
+	@Path("lista")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public List<Usuario> getUsuarios() {
+		
+		return new UsuarioDao().getUsuarios();
+	}
 	
 	@POST
 	@Path("id")

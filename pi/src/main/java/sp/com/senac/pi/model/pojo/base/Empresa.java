@@ -7,7 +7,7 @@ import sp.com.senac.pi.model.pojo.contato.Contato;
 import sp.com.senac.pi.model.pojo.localizacao.Cidade;
 
 public class Empresa {
-    private int id;
+    private int idEmpresa;
     private String nomeFantasia;
     private String razaoSocial;
     private String cnpj;
@@ -19,10 +19,9 @@ public class Empresa {
     private String bairro;
     private Cidade cidade;
     private List<Contato> contatos;
-    private int inativo;
     
     public Empresa() {
-        this.id = 0;
+        this.idEmpresa = 0;
         this.nomeFantasia = "";
         this.razaoSocial = "";
         this.cnpj = "";
@@ -34,14 +33,12 @@ public class Empresa {
 		this.bairro = "";
 		this.cidade = new Cidade();
         this.contatos = new ArrayList<Contato>();;
-        this.inativo = 0;
     }
 
-	public Empresa(int id, String nomeFantasia, String razaoSocial, String cnpj, String dataDeCriacao, String cep,
-			String logradouro, String numero, String complemento, String bairro, Cidade cidade, List<Contato> contatos,
-			int inativo) {
+	public Empresa(int idEmpresa, String nomeFantasia, String razaoSocial, String cnpj, String dataDeCriacao, String cep,
+			String logradouro, String numero, String complemento, String bairro, Cidade cidade, List<Contato> contatos) {
 		super();
-		this.id = id;
+		this.idEmpresa = idEmpresa;
 		this.nomeFantasia = nomeFantasia;
 		this.razaoSocial = razaoSocial;
 		this.cnpj = cnpj;
@@ -53,15 +50,14 @@ public class Empresa {
 		this.bairro = bairro;
 		this.cidade = cidade;
 		this.contatos = contatos;
-		this.inativo = inativo;
 	}
 
-	public int getId() {
-		return id;
+	public int getIdEmpresa() {
+		return idEmpresa;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public void setIdEmpresa(int idEmpresa) {
+		this.idEmpresa = idEmpresa;
 	}
 
 	public String getNomeFantasia() {
@@ -150,14 +146,6 @@ public class Empresa {
 
 	public void setContatos(List<Contato> contatos) {
 		this.contatos = contatos;
-	}
-
-	public int getInativo() {
-		return inativo;
-	}
-
-	public void setInativo(int inativo) {
-		this.inativo = inativo;
 	}
 
     

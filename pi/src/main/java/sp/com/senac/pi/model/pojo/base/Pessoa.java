@@ -7,7 +7,7 @@ import sp.com.senac.pi.model.pojo.contato.Contato;
 import sp.com.senac.pi.model.pojo.localizacao.Cidade;
 
 public class Pessoa {
-	private int id;
+	private int idPessoa;
     private String nome;
     private String sobrenome;
     private String cpf;
@@ -20,10 +20,9 @@ public class Pessoa {
     private String bairro;
     private Cidade cidade;
     private List<Contato> contatos;
-    private int inativo;
 
     public Pessoa() {
-        this.id = 0;
+        this.idPessoa = 0;
         this.nome = "";
         this.sobrenome = "";
         this.cpf = "";
@@ -36,12 +35,11 @@ public class Pessoa {
 		this.bairro = "";
 		this.cidade = new Cidade();
 		this.contatos = new ArrayList<Contato>();
-        this.inativo = 0;
     }
     
-	public Pessoa(int id, String nome, String sobrenome, String cpf, String dataDeNascimento, String sexo, String cep, String logradouro,
-			String numero, String complemento, String bairro, Cidade cidade, List<Contato> contatos, int inativo) {
-		this.id = id;
+	public Pessoa(int idPessoa, String nome, String sobrenome, String cpf, String dataDeNascimento, String sexo, String cep, String logradouro,
+			String numero, String complemento, String bairro, Cidade cidade, List<Contato> contatos) {
+		this.idPessoa = idPessoa;
 		this.nome = nome;
 		this.sobrenome = sobrenome;
 		this.cpf = cpf;
@@ -54,15 +52,14 @@ public class Pessoa {
 		this.bairro = bairro;
 		this.cidade = cidade;
 		this.contatos = contatos;
-		this.inativo = inativo;
 	}
 
-	public int getId() {
-		return id;
+	public int getIdPessoa() {
+		return idPessoa;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public void setIdPessoa(int id) {
+		this.idPessoa = id;
 	}
 
 	public String getNome() {
@@ -167,14 +164,6 @@ public class Pessoa {
 
 	public void setContatos(List<Contato> contatos) {
 		this.contatos = contatos;
-	}
-
-	public int getInativo() {
-		return inativo;
-	}
-
-	public void setInativo(int inativo) {
-		this.inativo = inativo;
 	}
 
    

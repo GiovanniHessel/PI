@@ -23,41 +23,16 @@ public class EmpresaDao {
 	}
 
 	public Empresa insert(Empresa empresa) {
-		empresa.setId(0);
-
-		String sql = "exec SPIU_EMPRESA ?,?,?,?,?,?,?,?,?,?,?,?";
-
-		this.connection.open();
-		try {
+		empresa.setIdEmpresa(0);
+		
+		return this.sendDB(empresa);
+		
+	}
 	
-			PreparedStatement stmt = connection.getConnection().prepareStatement(sql);
-
-			stmt.setInt(1, empresa.getId());
-			stmt.setString(2, empresa.getNomeFantasia());
-			stmt.setString(3, empresa.getRazaoSocial());
-			stmt.setString(4, empresa.getCnpj());
-			stmt.setString(5, empresa.getDataDeCriacao());
-			stmt.setString(6, empresa.getCep());
-			stmt.setString(7, empresa.getLogradouro());
-			stmt.setString(8, empresa.getNumero());
-			stmt.setString(9, empresa.getComplemento());
-			stmt.setString(10, empresa.getBairro());
-			stmt.setInt(11, empresa.getCidade().getId());
-			stmt.setInt(12, empresa.getInativo());
-
-			ResultSet rs = stmt.executeQuery();
-			if (rs.next()) {
-				empresa.setId(rs.getInt("id"));
-			}
-			rs.close();
-			stmt.close();
-		} catch (SQLException e) {
-			System.out.println(e.getMessage());
-			connection.close();
-			return empresa;
-		}
-		connection.close();
-		return empresa;
+	public Empresa update(Empresa empresa) {
+		
+		return this.sendDB(empresa);
+		
 	}
 
 	public Empresa getEmpresa(int id) {
@@ -135,7 +110,7 @@ public class EmpresaDao {
     	Pais pais = new Pais();
     	
 		try {
-			empresa.setId(rs.getInt("id"));
+			empresa.setIdEmpresa(rs.getInt("id"));
 			empresa.setNomeFantasia(rs.getString("nomeFantasia"));
 			empresa.setRazaoSocial(rs.getString("razaoSocial"));
 			empresa.setCnpj(rs.getString("CNPJ"));
@@ -146,7 +121,6 @@ public class EmpresaDao {
 			empresa.setComplemento(rs.getString("complemento"));
 			empresa.setBairro(rs.getString("bairro"));
 			empresa.setContatos(new ContatoDao().getContatos(empresa));
-			empresa.setInativo(rs.getInt("inativo"));
 			
 			cidade.setId(rs.getInt("idCidade"));
 			cidade.setCidade(rs.getString("cidade"));
@@ -166,6 +140,41 @@ public class EmpresaDao {
 		
 		empresa.setCidade(cidade);
 		
+		return empresa;
+	}
+	
+	private Empresa sendDB(Empresa empresa) {
+		String sql = "exec SPIU_EMPRESA ?,?,?,?,?,?,?,?,?,?,?";
+
+		this.connection.open();
+		try {
+	
+			PreparedStatement stmt = connection.getConnection().prepareStatement(sql);
+
+			stmt.setInt(1, empresa.getIdEmpresa());
+			stmt.setString(2, empresa.getNomeFantasia());
+			stmt.setString(3, empresa.getRazaoSocial());
+			stmt.setString(4, empresa.getCnpj());
+			stmt.setString(5, empresa.getDataDeCriacao());
+			stmt.setString(6, empresa.getCep());
+			stmt.setString(7, empresa.getLogradouro());
+			stmt.setString(8, empresa.getNumero());
+			stmt.setString(9, empresa.getComplemento());
+			stmt.setString(10, empresa.getBairro());
+			stmt.setInt(11, empresa.getCidade().getId());
+
+			ResultSet rs = stmt.executeQuery();
+			if (rs.next()) {
+				empresa.setIdEmpresa(rs.getInt("id"));
+			}
+			rs.close();
+			stmt.close();
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			connection.close();
+			return empresa;
+		}
+		connection.close();
 		return empresa;
 	}
 }

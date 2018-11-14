@@ -23,52 +23,14 @@ public class PessoaDao {
 	}
 
 	public Pessoa insert(Pessoa pessoa) {
-		pessoa.setId(0);
 		
-		this.connection.open();
-		try {
-	
-			PreparedStatement stmt = this.carregaParametros(pessoa);
-
-			ResultSet rs = stmt.executeQuery();
-			if (rs.next()) {
-				pessoa.setId(rs.getInt("id"));
-			}
-			rs.close();
-			stmt.close();
-		} catch (SQLException e) {
-			System.out.println(e.getMessage());
-			connection.close();
-			return pessoa;
-		}
-		connection.close();
-		
-		pessoa.setContatos(new ContatoDao().alterarContatos(pessoa));
-		return pessoa;
+		pessoa.setIdPessoa(0);
+		return this.sendDB(pessoa);
 	}
 	
 	public Pessoa update(Pessoa pessoa) {
 
-		this.connection.open();
-		try {
-	
-			PreparedStatement stmt = this.carregaParametros(pessoa);
-
-			ResultSet rs = stmt.executeQuery();
-			if (rs.next()) {
-				pessoa.setId(rs.getInt("id"));
-			}
-			rs.close();
-			stmt.close();
-		} catch (SQLException e) {
-			System.out.println(e.getMessage());
-			connection.close();
-			return pessoa;
-		}
-		connection.close();
-
-		pessoa.setContatos(new ContatoDao().alterarContatos(pessoa));
-		return pessoa;
+		return  this.sendDB(pessoa);
 	}
 	
 	public Pessoa getPessoa(int id) {
@@ -146,7 +108,7 @@ public class PessoaDao {
     	Pais pais = new Pais();
     	
 		try {
-			pessoa.setId(rs.getInt("id"));
+			pessoa.setIdPessoa(rs.getInt("id"));
 			pessoa.setNome(rs.getString("nome"));
 			pessoa.setSobrenome(rs.getString("sobreNome"));
 			pessoa.setCPF(rs.getString("CPF"));
@@ -160,7 +122,6 @@ public class PessoaDao {
 			pessoa.setBairro(rs.getString("bairro"));
 			
 			pessoa.setContatos(new ContatoDao().getContatos(pessoa));
-			pessoa.setInativo(rs.getInt("inativo"));
 			
 			cidade.setId(rs.getInt("idCidade"));
 			cidade.setCidade(rs.getString("cidade"));
@@ -183,25 +144,43 @@ public class PessoaDao {
 		return pessoa;
 	}
 	
-	private PreparedStatement carregaParametros(Pessoa pessoa) throws SQLException {
-		String sql = "exec SPIU_PESSOA ?,?,?,?,?,?,?,?,?,?,?,?,?";
+	private Pessoa sendDB(Pessoa pessoa)  {
 		
-		PreparedStatement stmt = connection.getConnection().prepareStatement(sql);
+		String sql = "exec SPIU_PESSOA ?,?,?,?,?,?,?,?,?,?,?,?";
 		
-		stmt.setInt(1, pessoa.getId());
-		stmt.setString(2, pessoa.getNome());
-		stmt.setString(3, pessoa.getSobrenome());
-		stmt.setString(4, pessoa.getCPF());
-		stmt.setString(5, pessoa.getDataDeNascimento());
-		stmt.setString(6, pessoa.getSexo());
-		stmt.setString(7, pessoa.getCep());
-		stmt.setString(8, pessoa.getLogradouro());
-		stmt.setString(9, pessoa.getNumero());
-		stmt.setString(10, pessoa.getComplemento());
-		stmt.setString(11, pessoa.getBairro());
-		stmt.setInt(12, pessoa.getCidade().getId());
-		stmt.setInt(13, pessoa.getInativo());
+		this.connection.open();
+		try {
+	
+			PreparedStatement stmt = connection.getConnection().prepareStatement(sql);
+			
+			stmt.setInt(1, pessoa.getIdPessoa());
+			stmt.setString(2, pessoa.getNome());
+			stmt.setString(3, pessoa.getSobrenome());
+			stmt.setString(4, pessoa.getCPF());
+			stmt.setString(5, pessoa.getDataDeNascimento());
+			stmt.setString(6, pessoa.getSexo());
+			stmt.setString(7, pessoa.getCep());
+			stmt.setString(8, pessoa.getLogradouro());
+			stmt.setString(9, pessoa.getNumero());
+			stmt.setString(10, pessoa.getComplemento());
+			stmt.setString(11, pessoa.getBairro());
+			stmt.setInt(12, pessoa.getCidade().getId());
+
+			ResultSet rs = stmt.executeQuery();
+			if (rs.next()) {
+				pessoa.setIdPessoa(rs.getInt("id"));
+			}
+			rs.close();
+			stmt.close();
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			connection.close();
+			return pessoa;
+		}
+		connection.close();
+		pessoa.setContatos(new ContatoDao().alterarContatos(pessoa));
 		
-		return stmt;
+		return pessoa;
+		
 	}
 }

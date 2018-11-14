@@ -188,7 +188,7 @@ public class ContatoDao {
         this.connection.open();
         try {
             PreparedStatement stmt = this.connection.getConnection().prepareStatement("Select * from contato where idPessoa = ?");
-            stmt.setInt(1, pessoa.getId());
+            stmt.setInt(1, pessoa.getIdPessoa());
             
             ResultSet rs = stmt.executeQuery();
            
@@ -213,7 +213,7 @@ public class ContatoDao {
         this.connection.open();
         try {
             PreparedStatement stmt = this.connection.getConnection().prepareStatement("Select * from contato where idEmpresa = ?");
-            stmt.setInt(1, empresa.getId());
+            stmt.setInt(1, empresa.getIdEmpresa());
             
             ResultSet rs = stmt.executeQuery();
            
@@ -234,7 +234,7 @@ public class ContatoDao {
     
     public List<Contato> alterarContatos(Pessoa pessoa){
     	for (int i = 0; i < pessoa.getContatos().size(); i++) {
-    		pessoa.getContatos().get(i).setIdPessoa(pessoa.getId());
+    		pessoa.getContatos().get(i).setIdPessoa(pessoa.getIdPessoa());
     		pessoa.getContatos().get(i).setIdEmpresa(0);
     		
         }
@@ -245,7 +245,7 @@ public class ContatoDao {
     
     public List<Contato> alterarContatos(Empresa empresa){
     	for (int i = 0; i < empresa.getContatos().size(); i++) {
-    		empresa.getContatos().get(i).setIdEmpresa(empresa.getId());
+    		empresa.getContatos().get(i).setIdEmpresa(empresa.getIdEmpresa());
     		empresa.getContatos().get(i).setIdPessoa(0);;
         }
     	
