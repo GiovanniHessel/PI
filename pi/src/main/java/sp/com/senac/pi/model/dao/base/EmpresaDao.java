@@ -19,7 +19,7 @@ public class EmpresaDao {
 	private DbConnection connection;
 
 	public EmpresaDao() {
-		this.connection = ConnectionSingleton.getConnection();
+		this.connection = ConnectionSingleton.getNewConnection();
 	}
 
 	public Empresa insert(Empresa empresa) {

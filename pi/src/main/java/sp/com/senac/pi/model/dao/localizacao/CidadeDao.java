@@ -16,7 +16,7 @@ public class CidadeDao {
 	private DbConnection connection;
 
     public CidadeDao() {
-        this.connection = ConnectionSingleton.getConnection();
+        this.connection = ConnectionSingleton.getNewConnection();
     }
     
     public boolean insert(Cidade cidade) {

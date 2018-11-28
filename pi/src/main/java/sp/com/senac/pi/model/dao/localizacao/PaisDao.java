@@ -14,7 +14,7 @@ public class PaisDao {
 	private DbConnection connection;
 
     public PaisDao() {
-        this.connection = ConnectionSingleton.getConnection();
+        this.connection = ConnectionSingleton.getNewConnection();
     }
     
     public boolean insert(Pais pais) {

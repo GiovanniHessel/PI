@@ -21,7 +21,7 @@ public class UsuarioDao {
 	private DbConnection connection;
 
 	public UsuarioDao() {
-		this.connection = ConnectionSingleton.getConnection();
+		this.connection = ConnectionSingleton.getNewConnection();
 	}
 
 	public Usuario insert(Usuario usuario) {
@@ -199,7 +199,6 @@ public class UsuarioDao {
 			usuario.setNumero(rs.getString("numero"));
 			usuario.setComplemento(rs.getString("complemento"));
 			usuario.setBairro(rs.getString("bairro"));
-			usuario.setContatos(new ContatoDao().getContatos(usuario));
 			
 			cidade.setId(rs.getInt("idCidade"));
 			cidade.setCidade(rs.getString("cidade"));
@@ -213,6 +212,7 @@ public class UsuarioDao {
 	        pais.setPais(rs.getString("pais"));
 	        pais.setSigla(rs.getString("siglaPais"));
 			
+	        usuario.setContatos(new ContatoDao().getContatos(usuario));
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}

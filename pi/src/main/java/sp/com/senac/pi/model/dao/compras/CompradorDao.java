@@ -21,7 +21,7 @@ public class CompradorDao {
 	private DbConnection connection;
 
 	public CompradorDao() {
-		this.connection = ConnectionSingleton.getConnection();
+		this.connection = ConnectionSingleton.getNewConnection();
 	}
 	
 	public Comprador insert(Comprador comprador) {

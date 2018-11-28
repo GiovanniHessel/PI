@@ -15,7 +15,7 @@ public class EstadoDao {
 	private DbConnection connection;
 
     public EstadoDao() {
-        this.connection = ConnectionSingleton.getConnection();
+        this.connection = ConnectionSingleton.getNewConnection();
     }
     
     public boolean insert(Estado estado) {
