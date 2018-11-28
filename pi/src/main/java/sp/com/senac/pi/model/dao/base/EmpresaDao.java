@@ -24,7 +24,6 @@ public class EmpresaDao {
 
 	public Empresa insert(Empresa empresa) {
 		empresa.setIdEmpresa(0);
-		
 		return this.sendDB(empresa);
 		
 	}

@@ -23,8 +23,8 @@ public class PessoaDao {
 	}
 
 	public Pessoa insert(Pessoa pessoa) {
-		
 		pessoa.setIdPessoa(0);
+		
 		return this.sendDB(pessoa);
 	}
 	
@@ -157,7 +157,7 @@ public class PessoaDao {
 			stmt.setString(2, pessoa.getNome());
 			stmt.setString(3, pessoa.getSobrenome());
 			stmt.setString(4, pessoa.getCPF());
-			stmt.setString(5, pessoa.getDataDeNascimento());
+			stmt.setString(5, new Util().getStringDate(pessoa.getDataDeNascimento()));
 			stmt.setString(6, pessoa.getSexo());
 			stmt.setString(7, pessoa.getCep());
 			stmt.setString(8, pessoa.getLogradouro());
@@ -174,6 +174,8 @@ public class PessoaDao {
 			stmt.close();
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
+			System.out.println(new Util().getStringDate(pessoa.getDataDeNascimento()));
+			System.out.println(pessoa.getCidade().getId());
 			connection.close();
 			return pessoa;
 		}

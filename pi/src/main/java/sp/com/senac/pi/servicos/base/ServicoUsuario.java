@@ -21,7 +21,6 @@ public class ServicoUsuario {
 	@GET
 	@Path("lista")
 	@Produces(MediaType.APPLICATION_JSON)
-	@Consumes(MediaType.APPLICATION_JSON)
 	public List<Usuario> getUsuarios() {
 		
 		return new UsuarioDao().getUsuarios();
@@ -36,6 +35,14 @@ public class ServicoUsuario {
 		return new UsuarioDao().getUsuario(usuario.getId());
 	}
 	
+	@POST
+	@Path("cpf")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Usuario getUsuarioCpf(Usuario usuario) {
+		
+		return new UsuarioDao().getUsuario(usuario.getCpf());
+	}
 
 	@POST
 	@Path("signin")

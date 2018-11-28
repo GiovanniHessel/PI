@@ -27,8 +27,10 @@ public class UsuarioDao {
 	public Usuario insert(Usuario usuario) {
 		usuario.setId(0);
 		
-		Pessoa pessoa = new  PessoaDao().insert(usuario);
-		usuario.setIdPessoa(pessoa.getIdPessoa());
+		if (usuario.getIdPessoa() == 0){
+			Pessoa pessoa = new  PessoaDao().insert(usuario);
+			usuario.setIdPessoa(pessoa.getIdPessoa());
+		}
 		
 		if (usuario.getIdPessoa() == 0) {
 			return usuario;
@@ -105,6 +107,31 @@ public class UsuarioDao {
 			PreparedStatement stmt = this.connection.getConnection().prepareStatement("select * from vwUsuario where login = ? and chave = ?");
 			stmt.setString(1, login);
 			stmt.setString(2, new Seguranca().hash(chave));
+
+			ResultSet rs = stmt.executeQuery();
+			Usuario usuario = new Usuario();
+		
+			if (rs.next()) {
+				usuario = this.carregaUsuario(rs);
+			}
+
+			rs.close();
+			stmt.close();
+			connection.close();
+			return usuario;
+
+		} catch (SQLException e) {
+			connection.close();
+			throw new RuntimeException(e);
+		}
+	}
+	
+	public Usuario getUsuario(String cpf) {
+		this.connection.open();
+		try {
+			PreparedStatement stmt = this.connection.getConnection().prepareStatement("select * from vwUsuario where cpf = ?");
+			stmt.setString(1, cpf);
+
 
 			ResultSet rs = stmt.executeQuery();
 			Usuario usuario = new Usuario();

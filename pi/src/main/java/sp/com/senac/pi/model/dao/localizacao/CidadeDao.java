@@ -88,6 +88,30 @@ public class CidadeDao {
             throw new RuntimeException(e);
         }
     }
+    
+    public List<Cidade> getApenasCidades() {
+        this.connection.open();
+        try {
+            PreparedStatement stmt = this.connection.getConnection().prepareStatement("Select * from Cidade");
+
+            ResultSet rs = stmt.executeQuery();
+            List<Cidade> cidades = new ArrayList<Cidade>();
+            while (rs.next()) {
+            	Cidade cidade = new Cidade();
+            	cidade.setId(rs.getInt("id"));
+                cidade.setCidade(rs.getString("cidade"));
+                cidade.setSigla(rs.getString("sigla"));
+                cidades.add(cidade);
+            }
+            rs.close();
+            stmt.close();
+            connection.close();
+            return cidades;
+        } catch (SQLException e) {
+            connection.close();
+            throw new RuntimeException(e);
+        }
+    }
 
     public List<Cidade> getCidades(Estado estado) {
         this.connection.open();
