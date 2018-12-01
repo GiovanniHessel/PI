@@ -96,4 +96,13 @@ public class ServicoProduto {
 		
 		return new ProdutoDao().delete(produto);
 	}
+	
+	@PUT
+	@Path("ativoInativo")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Produto ativoInativo(Produto produto) {
+		System.out.println(produto.getInativo());
+		return new ProdutoDao().ativoInativo(produto);
+	}
 }

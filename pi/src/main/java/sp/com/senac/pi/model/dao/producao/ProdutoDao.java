@@ -101,6 +101,32 @@ public class ProdutoDao {
 		return produto;
 	}
 	
+	public Produto ativoInativo(Produto produto) {
+
+		this.connection.open();
+		try {
+	
+			PreparedStatement stmt = this.connection.getConnection().prepareStatement("update Producao.Produto set inativo = ? OUTPUT DELETED.id  where id = ?");
+			stmt.setInt(1, produto.getInativo());
+			stmt.setInt(2, produto.getId());
+
+			ResultSet rs = stmt.executeQuery();
+			if (rs.next()) {
+				produto.setId(rs.getInt("id"));
+			}
+			
+			rs.close();
+			stmt.close();
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			connection.close();
+			return produto;
+		}
+		connection.close();
+		
+		return produto;
+	}
+	
 	public Produto getProduto(int id) {
 		this.connection.open();
 		try {
