@@ -53,12 +53,12 @@ public class CompraItemDao {
    }
 	
 	public List<CompraItem> alterarCompraItem(Compra compra){
-    	for (int i = 0; i < compra.getCompraItem().size(); i++) {
-    		compra.getCompraItem().get(i).setIdCompra(compra.getId());
+    	for (int i = 0; i < compra.getCompraItens().size(); i++) {
+    		compra.getCompraItens().get(i).setIdCompra(compra.getId());
         }
     	
-    	this.alterarCompraItem(this.getCompraItem(compra), compra.getCompraItem());
-    	return this.getCompraItem(compra);
+    	this.alterarCompraItem(this.getCompraItens(compra), compra.getCompraItens());
+    	return this.getCompraItens(compra);
     }
     
     private void alterarCompraItem(List<CompraItem> compraItemAtuais, List<CompraItem> compraItemAlterados){
@@ -111,7 +111,7 @@ public class CompraItemDao {
         }
 	}
 	
-	public List<CompraItem> getCompraItem(Compra compra) {
+	public List<CompraItem> getCompraItens(Compra compra) {
 		this.connection.open();
         try {
             PreparedStatement stmt = this.connection.getConnection().prepareStatement("Select * from Compras.CompraItem where idCompra = ?");
@@ -133,7 +133,7 @@ public class CompraItemDao {
         }
 	}
 	
-	public List<CompraItem> getCompraItem() {
+	public List<CompraItem> getCompraItens() {
 		this.connection.open();
         try {
             PreparedStatement stmt = this.connection.getConnection().prepareStatement("Select * from Compras.CompraItem");

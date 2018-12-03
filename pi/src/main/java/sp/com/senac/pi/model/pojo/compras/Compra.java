@@ -4,17 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Compra {
-	private int id;
-	private List<CompraItem> compraItem;
+	private Integer id;
+	private List<CompraItem> compraItens;
 	private String dataDaCompra;
 	private Comprador comprador;
 	private Fornecedor fornecedor;
-	private boolean recebido;
+	private Boolean recebido;
 	
-	public Compra(int id, List<CompraItem> compraItem, String dataDaCompra, Comprador comprador, Fornecedor fornecedor,
+	public Compra(Integer id, List<CompraItem> compraItens, String dataDaCompra, Comprador comprador, Fornecedor fornecedor,
 			boolean recebido) {
 		this.id = id;
-		this.compraItem = compraItem;
+		this.compraItens = compraItens;
 		this.dataDaCompra = dataDaCompra;
 		this.comprador = comprador;
 		this.fornecedor = fornecedor;
@@ -23,27 +23,27 @@ public class Compra {
 	
 	public Compra() {
 		this.id = 0;
-		this.compraItem = new ArrayList<CompraItem>();
+		this.compraItens = new ArrayList<CompraItem>();
 		this.dataDaCompra = "";
 		this.comprador = new Comprador();
 		this.fornecedor = new Fornecedor();
 		this.recebido = false;
 	}
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
-	public List<CompraItem> getCompraItem() {
-		return compraItem;
+	public List<CompraItem> getCompraItens() {
+		return compraItens;
 	}
 
-	public void setCompraItem(List<CompraItem> compraItem) {
-		this.compraItem = compraItem;
+	public void setCompraItens(List<CompraItem> compraItens) {
+		this.compraItens = compraItens;
 	}
 
 	public String getDataDaCompra() {
