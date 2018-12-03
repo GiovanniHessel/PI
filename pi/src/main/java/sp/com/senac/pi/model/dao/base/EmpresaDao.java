@@ -114,6 +114,7 @@ public class EmpresaDao {
 			empresa.setRazaoSocial(rs.getString("razaoSocial"));
 			empresa.setCnpj(rs.getString("CNPJ"));
 			empresa.setDataDeCriacao(new Util().getStringDate(rs.getTimestamp("dataDeCriacao")));
+			
 			empresa.setCep(rs.getString("cep"));
 			empresa.setLogradouro(rs.getString("logradouro"));
 			empresa.setNumero(rs.getString("numero"));

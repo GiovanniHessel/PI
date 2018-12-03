@@ -255,6 +255,7 @@ public class ContatoDao {
     
     private void alterarContatos(List<Contato> contatosAtuais, List<Contato> contatosAlterados){
     	
+    	//Excluindo e Alterando
 		for (Contato contatoAtual : contatosAtuais) {
 			int flag = 0;
 			
@@ -271,7 +272,8 @@ public class ContatoDao {
 				}	
 			}
 		}
-	
+		
+		//Inserindo
 		for (Contato contato : contatosAlterados) {
 			if (contato.getId() == 0) {
 				this.insert(contato);
