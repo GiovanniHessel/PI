@@ -115,6 +115,7 @@ public class PessoaDao {
 			
 			pessoa.setDataDeNascimento(new Util().getStringDate(rs.getTimestamp("dataDeNascimento")));
 			pessoa.setSexo(rs.getString("sexo"));
+			
 			pessoa.setCep(rs.getString("cep"));
 			pessoa.setLogradouro(rs.getString("logradouro"));
 			pessoa.setNumero(rs.getString("numero"));

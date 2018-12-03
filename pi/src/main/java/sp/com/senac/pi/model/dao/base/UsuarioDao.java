@@ -104,7 +104,7 @@ public class UsuarioDao {
 	public Usuario getUsuario(String login, String chave) {
 		this.connection.open();
 		try {
-			PreparedStatement stmt = this.connection.getConnection().prepareStatement("select * from vwUsuario where login = ? and chave = ?");
+			PreparedStatement stmt = this.connection.getConnection().prepareStatement("select * from vwUsuario where login = ? and chave = ? and inativo != 1");
 			stmt.setString(1, login);
 			stmt.setString(2, new Seguranca().hash(chave));
 
@@ -195,6 +195,8 @@ public class UsuarioDao {
 			usuario.setDataDeNascimento(new Util().getStringDate(rs.getTimestamp("dataDeNascimento")));
 			
 			usuario.setSexo(rs.getString("sexo"));
+			
+			usuario.setCep(rs.getString("cep"));
 			usuario.setLogradouro(rs.getString("logradouro"));
 			usuario.setNumero(rs.getString("numero"));
 			usuario.setComplemento(rs.getString("complemento"));

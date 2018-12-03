@@ -56,7 +56,7 @@ public class CompradorDao {
 		this.connection.open();
 		try {
 			PreparedStatement stmt = this.connection.getConnection()
-					.prepareStatement("SPD_COMPRADOR ?");
+					.prepareStatement("Compras.SPD_COMPRADOR ?");
 			stmt.setInt(1, comprador.getId());
 
 			ResultSet rs = stmt.executeQuery();
@@ -80,7 +80,7 @@ public class CompradorDao {
 		this.connection.open();
 		try {
 			PreparedStatement stmt = this.connection.getConnection()
-					.prepareStatement("select * from vwComprador where id = ?");
+					.prepareStatement("select * from Compras.vwComprador where id = ?");
 			stmt.setInt(1, id);
 
 			ResultSet rs = stmt.executeQuery();
@@ -104,7 +104,7 @@ public class CompradorDao {
 	public Comprador getCompradorNome(String nome) {
 		this.connection.open();
 		try {
-			PreparedStatement stmt = this.connection.getConnection().prepareStatement("select * from vwComprador where nome like '" + nome +"'");
+			PreparedStatement stmt = this.connection.getConnection().prepareStatement("select * from Compras.vwComprador where nome like '" + nome +"'");
 
 			ResultSet rs = stmt.executeQuery();
 			Comprador comprador = new Comprador();
@@ -127,7 +127,7 @@ public class CompradorDao {
 	public Comprador getCompradorCpf(String cpf) {
 		this.connection.open();
 		try {
-			PreparedStatement stmt = this.connection.getConnection().prepareStatement("select * from vwComprador where cpf = ?");
+			PreparedStatement stmt = this.connection.getConnection().prepareStatement("select * from Compras.vwComprador where cpf = ?");
 			stmt.setString(1, cpf);
 
 			ResultSet rs = stmt.executeQuery();
@@ -151,7 +151,7 @@ public class CompradorDao {
 	public List<Comprador> getCompradores() {
 		this.connection.open();
 		try {
-			PreparedStatement stmt = this.connection.getConnection().prepareStatement("select * from vwComprador");
+			PreparedStatement stmt = this.connection.getConnection().prepareStatement("select * from Compras.vwComprador");
 			List<Comprador> compradores = new ArrayList<Comprador>();
 			ResultSet rs = stmt.executeQuery();
 			
@@ -191,6 +191,8 @@ public class CompradorDao {
 			comprador.setDataDeNascimento(new Util().getStringDate(rs.getTimestamp("dataDeNascimento")));
 			
 			comprador.setSexo(rs.getString("sexo"));
+			
+			comprador.setCep(rs.getString("cep"));
 			comprador.setLogradouro(rs.getString("logradouro"));
 			comprador.setNumero(rs.getString("numero"));
 			comprador.setComplemento(rs.getString("complemento"));
@@ -222,7 +224,7 @@ public class CompradorDao {
 	
 	private Comprador sendDB(Comprador comprador)  {
 		
-		String sql = "exec SPIU_COMPRADOR ?,?,?,?";
+		String sql = "exec Compras.SPIU_COMPRADOR ?,?,?,?";
 		
 		this.connection.open();
 		try {
