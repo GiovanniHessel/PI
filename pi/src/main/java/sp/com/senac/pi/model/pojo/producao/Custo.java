@@ -1,12 +1,12 @@
 package sp.com.senac.pi.model.pojo.producao;
 
 public class Custo {
-	private int id;
-	private float custo;
+	private Integer id;
+	private Float custo;
 	private String dataCusto; 
 	private Integer idProduto;
 	
-	public Custo(int id, float custo, String dataCusto, Integer idProduto) {
+	public Custo(Integer id, Float custo, String dataCusto, Integer idProduto) {
 		this.id = id;
 		this.custo = custo;
 		this.dataCusto = dataCusto;
@@ -15,24 +15,24 @@ public class Custo {
 	
 	public Custo() {
 		this.id = 0;
-		this.custo = 0;
+		this.custo = (float) 0;
 		this.dataCusto = "";
 		this.idProduto = 0;
 	}
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
-	public float getCusto() {
+	public Float getCusto() {
 		return custo;
 	}
 
-	public void setCusto(float custo) {
+	public void setCusto(Float custo) {
 		this.custo = custo;
 	}
 

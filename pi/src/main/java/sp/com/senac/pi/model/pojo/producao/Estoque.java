@@ -1,13 +1,13 @@
 package sp.com.senac.pi.model.pojo.producao;
 
 public class Estoque {
-	private int id;
-	private float quantidade;
+	private Integer id;
+	private Float quantidade;
 	private String motivo;
 	private String dataEstoque;
 	private Integer idProduto;
 	
-	public Estoque(int id, float quantidade, String motivo, String dataEstoque, Integer idProduto) {
+	public Estoque(Integer id, Float quantidade, String motivo, String dataEstoque, Integer idProduto) {
 		this.id = id;
 		this.quantidade = quantidade;
 		this.motivo = motivo;
@@ -17,21 +17,21 @@ public class Estoque {
 	
 	public Estoque() {
 		this.id = 0;
-		this.quantidade = 0;
+		this.quantidade = (float) 0;
 		this.motivo = "";
 		this.dataEstoque = "";
 		this.idProduto = 0;
 	}
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
-	public float getQuantidade() {
+	public Float getQuantidade() {
 		return quantidade;
 	}
 

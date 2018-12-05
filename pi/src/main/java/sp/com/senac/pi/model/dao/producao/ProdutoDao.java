@@ -4,6 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import sp.com.senac.pi.conexao.contratos.DbConnection;
@@ -43,9 +44,15 @@ public class ProdutoDao {
 		}
 		connection.close();
 		
-		produto.setPrecos(new PrecoDao().insertPrecos(produto));
-		produto.setCustos(new CustoDao().insertCustos(produto));
-		produto.setEstoques(new EstoqueDao().estoqueInicial(produto));
+		if (produto.getId() != 0) {
+			produto.getPreco().setIdProduto(produto.getId());
+			produto.getCusto().setIdProduto(produto.getId());
+			produto.getEstoque().setIdProduto(produto.getId());
+			
+			produto.setPreco(new PrecoDao().insert(produto.getPreco()));
+			produto.setCusto(new CustoDao().insert(produto.getCusto()));
+			produto.setEstoque(new EstoqueDao().estoqueInicial(produto));
+		}
 		
 		return produto;
 	}
@@ -70,8 +77,8 @@ public class ProdutoDao {
 		}
 		connection.close();
 
-		produto.setPrecos(new PrecoDao().insertPrecos(produto));
-		produto.setCustos(new CustoDao().insertCustos(produto));
+		produto.setPreco(new PrecoDao().insert(produto.getPreco()));
+		produto.setCusto(new CustoDao().insert(produto.getCusto()));
 		
 		return produto;
 	}
@@ -252,9 +259,9 @@ public class ProdutoDao {
 			produto.setComprimento(rs.getFloat("comprimento"));
 			produto.setInativo(rs.getInt("inativo"));
 			
-			produto.setPrecos( new PrecoDao().getPrecos(produto));
-			produto.setCustos( new CustoDao().getCustos(produto));
-			produto.setEstoques( new EstoqueDao().getEstoques(produto));
+			produto.setPreco( new PrecoDao().getPreco(produto.getPreco().getId() ));
+			produto.setCusto( new CustoDao().getCusto(produto.getCusto().getId() ));
+			produto.setEstoque( new EstoqueDao().getEstoque(produto.getEstoque().getId()));
 			
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
@@ -284,27 +291,32 @@ public class ProdutoDao {
 			preco.setId(rs.getInt("idPreco"));
 			preco.setPreco(rs.getFloat("preco"));
 			
-			preco.setDataPreco(new Util().getStringDate(rs.getTimestamp("dataPreco")));
+			Date data = rs.getTimestamp("dataPreco");
+			preco.setDataPreco(new Util().getStringDate(data));
 			preco.setIdProduto(rs.getInt("id"));
 			
 			custo.setId(rs.getInt("idCusto"));
 			custo.setCusto(rs.getFloat("custo"));
-			custo.setDataCusto(new Util().getStringDate(rs.getTimestamp("dataCusto")));
+			
+			data = rs.getTimestamp("dataCusto");
+			custo.setDataCusto(new Util().getStringDate(data));
 			custo.setIdProduto(rs.getInt("id"));
 	        
 			estoque.setId(rs.getInt("idEstoque"));
 			estoque.setQuantidade(rs.getFloat("quantidade"));
 			estoque.setMotivo(rs.getString("motivo"));
-			estoque.setDataEstoque(new Util().getStringDate(rs.getTimestamp("dataEstoque")));
+			
+			data = rs.getTimestamp("dataEstoque");
+			estoque.setDataEstoque(new Util().getStringDate(data));
 			estoque.setIdProduto(rs.getInt("id"));
 			
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
 		
-		produto.getPrecos().add(preco);
-		produto.getCustos().add(custo);
-		produto.getEstoques().add(estoque);
+		produto.setPreco(preco);
+		produto.setCusto(custo);
+		produto.setEstoque(estoque);
 		
 		return produto;
 	}

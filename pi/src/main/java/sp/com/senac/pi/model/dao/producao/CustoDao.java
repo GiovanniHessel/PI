@@ -98,7 +98,7 @@ public class CustoDao {
         return custos;
     }
     
-    public List<Custo> insertCustos(Produto produto) {
+    /*public List<Custo> insertCustos(Produto produto) {
         
         connection.open();
         try {
@@ -124,7 +124,7 @@ public class CustoDao {
         }
         connection.close();
         return produto.getCustos();
-    }
+    }*/
     
     public List<Custo> update(List<Custo> custos) {
         
@@ -177,7 +177,7 @@ public class CustoDao {
              throw new RuntimeException(e);
          }
     }
-    public Custo getCusto(int id) {
+    public Custo getCusto(Integer id) {
         this.connection.open();
         try {
             PreparedStatement stmt = this.connection.getConnection().prepareStatement("Select * from Produto.Custo Where id = ?");
@@ -248,7 +248,7 @@ public class CustoDao {
         }
     }
     
-    public List<Custo> alterarCustos(Produto produto){
+    /*public List<Custo> alterarCustos(Produto produto){
     	for (int i = 0; i < produto.getCustos().size(); i++) {
     		produto.getCustos().get(i).setIdProduto(produto.getId());
         }
@@ -282,7 +282,7 @@ public class CustoDao {
 				this.insert(custo);
 			}
 		}
-    }
+    }*/
     
     private Custo carregaCusto(ResultSet rs) {
     	Custo custo = new Custo();

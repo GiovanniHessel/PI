@@ -1,8 +1,5 @@
 package sp.com.senac.pi.model.pojo.producao;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Produto {
 	private int id; 
 	private String nome;
@@ -13,13 +10,13 @@ public class Produto {
 	private float largura;
 	private float altura;
 	private float comprimento;
-	private List<Preco> precos;
-	private List<Custo> custos;
-	private List<Estoque> estoques;
+	private Preco preco;
+	private Custo custo;
+	private Estoque estoque;
 	private int inativo;
 	
 	public Produto(int id, String nome, String descricao, String ean, String marca, float peso, float largura, float altura,
-			float comprimento, List<Preco> precos, List<Custo> custos, List<Estoque>  estoques, int inativo) {
+			float comprimento, Preco preco, Custo custo, Estoque  estoque, int inativo) {
 		
 		this.id = id;
 		this.nome = nome;
@@ -30,9 +27,9 @@ public class Produto {
 		this.largura = largura;
 		this.altura = altura;
 		this.comprimento = comprimento;
-		this.precos = precos;
-		this.custos = custos;
-		this.estoques = estoques;
+		this.preco = preco;
+		this.custo = custo;
+		this.estoque = estoque;
 		this.inativo = inativo;
 	}
 	
@@ -47,9 +44,9 @@ public class Produto {
 		this.largura = 0;
 		this.altura = 0;
 		this.comprimento = 0;
-		this.precos = new ArrayList<Preco>();
-		this.custos =  new ArrayList<Custo>();
-		this.estoques =  new ArrayList<Estoque>();
+		this.preco = new Preco();
+		this.custo =  new Custo();
+		this.estoque =  new Estoque();
 		this.inativo = 0;
 	}
 
@@ -126,28 +123,28 @@ public class Produto {
 		this.comprimento = comprimento;
 	}
 
-	public List<Preco> getPrecos() {
-		return precos;
+	public Preco getPreco() {
+		return preco;
 	}
 
-	public void setPrecos(List<Preco> precos) {
-		this.precos = precos;
+	public void setPreco(Preco preco) {
+		this.preco = preco;
 	}
 
-	public List<Custo> getCustos() {
-		return custos;
+	public Custo getCusto() {
+		return custo;
 	}
 
-	public void setCustos(List<Custo> custos) {
-		this.custos = custos;
+	public void setCusto(Custo custo) {
+		this.custo = custo;
 	}
 
-	public List<Estoque> getEstoques() {
-		return estoques;
+	public Estoque getEstoque() {
+		return estoque;
 	}
 
-	public void setEstoques(List<Estoque> estoques) {
-		this.estoques = estoques;
+	public void setEstoque(Estoque estoque) {
+		this.estoque = estoque;
 	}
 
 	public int getInativo() {

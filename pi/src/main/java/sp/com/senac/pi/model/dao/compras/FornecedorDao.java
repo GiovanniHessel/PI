@@ -15,6 +15,7 @@ import sp.com.senac.pi.model.pojo.compras.Fornecedor;
 import sp.com.senac.pi.model.pojo.localizacao.Cidade;
 import sp.com.senac.pi.model.pojo.localizacao.Estado;
 import sp.com.senac.pi.model.pojo.localizacao.Pais;
+import sp.com.senac.pi.model.pojo.producao.Produto;
 import sp.com.senac.pi.util.control.Util;
 
 public class FornecedorDao {
@@ -76,6 +77,32 @@ public class FornecedorDao {
 		}
 	}
 	
+	public Fornecedor ativoInativo(Fornecedor fornecedor) {
+
+		this.connection.open();
+		try {
+	
+			PreparedStatement stmt = this.connection.getConnection().prepareStatement("update Compras.Fornecedor set inativo = ? OUTPUT DELETED.id  where id = ?");
+			stmt.setInt(1, fornecedor.getInativo());
+			stmt.setInt(2, fornecedor.getId());
+
+			ResultSet rs = stmt.executeQuery();
+			if (rs.next()) {
+				fornecedor.setId(rs.getInt("id"));
+			}
+			
+			rs.close();
+			stmt.close();
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			connection.close();
+			return fornecedor;
+		}
+		connection.close();
+		
+		return fornecedor;
+	}
+	
 	public Fornecedor getFornecedor(int id) {
 		this.connection.open();
 		try {
@@ -101,22 +128,22 @@ public class FornecedorDao {
 		}
 	}
 
-	public Fornecedor getFornecedorNome(String nome) {
+	public List<Fornecedor> getFornecedorNome(String nome) {
 		this.connection.open();
 		try {
 			PreparedStatement stmt = this.connection.getConnection().prepareStatement("select * from Compras.vwFornecedor where nomeFantasia like '" + nome +"'");
 
 			ResultSet rs = stmt.executeQuery();
-			Fornecedor fornecedor = new Fornecedor();
+			List<Fornecedor> fornecedores = new ArrayList<Fornecedor>();
 		
-			if (rs.next()) {
-				fornecedor = this.carregaFornecedor(rs);
+			while (rs.next()) {
+				fornecedores.add(this.carregaFornecedor(rs));
 			}
 
 			rs.close();
 			stmt.close();
 			connection.close();
-			return fornecedor;
+			return fornecedores;
 
 		} catch (SQLException e) {
 			connection.close();
@@ -178,14 +205,15 @@ public class FornecedorDao {
     	Pais pais = new Pais();
     	
 		try {
+			
 			fornecedor.setId(rs.getInt("id"));
 			fornecedor.setFormatoJuridico(rs.getString("formatoJuridico"));
 			fornecedor.setRegimeTributario(rs.getString("regimeTributario"));
 			fornecedor.setInativo(rs.getInt("inativo"));
 			
 			fornecedor.setIdEmpresa(rs.getInt("idEmpresa"));
-			fornecedor.setNomeFantasia(rs.getString("nome"));
-			fornecedor.setRazaoSocial(rs.getString("sobreNome"));
+			fornecedor.setNomeFantasia(rs.getString("nomeFantasia"));
+			fornecedor.setRazaoSocial(rs.getString("razaoSocial"));
 			fornecedor.setCnpj(rs.getString("CNPJ"));
 			fornecedor.setDataDeCriacao(new Util().getStringDate(rs.getTimestamp("dataDeCriacao")));
 			
@@ -209,6 +237,7 @@ public class FornecedorDao {
 	        pais.setSigla(rs.getString("siglaPais"));
 			
 		} catch (SQLException e) {
+			System.out.println("afonso");
 			throw new RuntimeException(e);
 		}
 		
@@ -234,6 +263,7 @@ public class FornecedorDao {
 			stmt.setInt(4, fornecedor.getIdEmpresa());
 			stmt.setInt(5, fornecedor.getInativo());
 			
+			
 			ResultSet rs = stmt.executeQuery();
 			if (rs.next()) {
 				fornecedor.setId(rs.getInt("id"));
@@ -241,6 +271,8 @@ public class FornecedorDao {
 			rs.close();
 			stmt.close();
 		} catch (SQLException e) {
+			System.out.println("3");
+			
 			System.out.println(e.getMessage());
 			connection.close();
 			return fornecedor;

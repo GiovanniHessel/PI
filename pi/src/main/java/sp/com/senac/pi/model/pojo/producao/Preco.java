@@ -1,12 +1,12 @@
 package sp.com.senac.pi.model.pojo.producao;
 
 public class Preco {
-	private int id; 
-	private float preco; 
+	private Integer id; 
+	private Float preco; 
 	private String dataPreco;
 	private Integer idProduto;
 	
-	public Preco(int id, float preco, String dataPreco, Integer idProduto) {
+	public Preco(Integer id, Float preco, String dataPreco, Integer idProduto) {
 		this.id = id;
 		this.preco = preco;
 		this.dataPreco = dataPreco;
@@ -15,24 +15,24 @@ public class Preco {
 	
 	public Preco() {
 		this.id = 0;
-		this.preco = 0;
+		this.preco = (float) 0;
 		this.dataPreco = "";
 		this.idProduto = 0;
 	}
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
-	public float getPreco() {
+	public Float getPreco() {
 		return preco;
 	}
 
-	public void setPreco(float preco) {
+	public void setPreco(Float preco) {
 		this.preco = preco;
 	}
 

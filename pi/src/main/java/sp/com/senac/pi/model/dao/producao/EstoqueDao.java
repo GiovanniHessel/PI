@@ -116,7 +116,37 @@ public class EstoqueDao {
         return estoques;
     }
     
-    public List<Estoque> estoqueInicial(Produto produto) {
+    public Estoque estoqueInicial(Produto produto) {
+    	Estoque estoque = new Estoque();
+        connection.open();
+        try {
+           	
+        	estoque.setQuantidade(0);
+        	estoque.setIdProduto(produto.getId());
+        	estoque.setDataEstoque(new Util().getStringDate(new Date()));
+        	estoque.setMotivo("Estoque Inicial");
+        	
+        	PreparedStatement stmt = this.carregaParametros(estoque);
+        	
+        	
+            ResultSet rs = stmt.executeQuery();
+			if (rs.next()) {
+				estoque.setId(rs.getInt("id"));
+			}
+			
+			rs.close();
+            stmt.close();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            System.out.println("Insert");
+            connection.close();
+            return estoque;
+        }
+        connection.close();
+        return estoque;
+    }
+    
+    /*public List<Estoque> estoqueInicial(Produto produto) {
     	List<Estoque> estoques = new ArrayList<Estoque>();
     	Estoque estoque = new Estoque();
         connection.open();
@@ -146,7 +176,7 @@ public class EstoqueDao {
         }
         connection.close();
         return estoques;
-    }
+    }*/
     
     public List<Estoque> update(List<Estoque> estoques) {
         
@@ -193,7 +223,7 @@ public class EstoqueDao {
              throw new RuntimeException(e);
          }
     }
-    public Estoque getEstoque(int id) {
+    public Estoque getEstoque(Integer id) {
         this.connection.open();
         try {
             PreparedStatement stmt = this.connection.getConnection().prepareStatement("Select * from Produto.Estoque Where id = ?");
@@ -264,7 +294,7 @@ public class EstoqueDao {
         }
     }
     
-    public List<Estoque> alterarEstoques(Produto produto){
+    /*public List<Estoque> alterarEstoques(Produto produto){
     	for (int i = 0; i < produto.getEstoques().size(); i++) {
     		produto.getEstoques().get(i).setIdProduto(produto.getId());
         }
@@ -298,7 +328,7 @@ public class EstoqueDao {
 				this.insert(estoque);
 			}
 		}
-    }
+    }*/
     
     private Estoque carregaEstoque(ResultSet rs) {
     	Estoque estoque = new Estoque();

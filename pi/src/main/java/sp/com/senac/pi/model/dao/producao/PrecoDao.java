@@ -97,13 +97,11 @@ public class PrecoDao {
         return precos;
     }
     
-    public List<Preco> insertPrecos(Produto produto) {
+    /*public List<Preco> insertPrecos(Produto produto) {
         
         connection.open();
         try {
-        	
         	for (Preco preco : produto.getPrecos()) {
-        		
         		if (preco.getId() == 0) {
         			preco.setIdProduto(produto.getId());
 		            PreparedStatement stmt = this.carregaParametros(preco);
@@ -125,7 +123,7 @@ public class PrecoDao {
         }
         connection.close();
         return produto.getPrecos();
-    }
+    }*/
     
     public List<Preco> update(List<Preco> precos) {
         
@@ -178,7 +176,7 @@ public class PrecoDao {
              throw new RuntimeException(e);
          }
     }
-    public Preco getPreco(int id) {
+    public Preco getPreco(Integer id) {
         this.connection.open();
         try {
             PreparedStatement stmt = this.connection.getConnection().prepareStatement("Select * from Produto.Preco Where id = ?");
@@ -249,7 +247,7 @@ public class PrecoDao {
         }
     }
     
-    public List<Preco> alterarPrecos(Produto produto){
+    /*public List<Preco> alterarPrecos(Produto produto){
     	for (int i = 0; i < produto.getPrecos().size(); i++) {
     		produto.getPrecos().get(i).setIdProduto(produto.getId());
         }
@@ -283,7 +281,7 @@ public class PrecoDao {
 				this.insert(preco);
 			}
 		}
-    }
+    }*/
     
     private Preco carregaPreco(ResultSet rs) {
     	Preco preco = new Preco();
