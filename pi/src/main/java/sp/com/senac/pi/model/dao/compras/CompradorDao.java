@@ -76,6 +76,32 @@ public class CompradorDao {
 		}
 	}
 	
+	public Comprador ativoInativo(Comprador comprador) {
+
+		this.connection.open();
+		try {
+	
+			PreparedStatement stmt = this.connection.getConnection().prepareStatement("update Compras.Comprador set inativo = ? OUTPUT DELETED.id  where id = ?");
+			stmt.setInt(1, comprador.getInativo());
+			stmt.setInt(2, comprador.getId());
+
+			ResultSet rs = stmt.executeQuery();
+			if (rs.next()) {
+				comprador.setId(rs.getInt("id"));
+			}
+			
+			rs.close();
+			stmt.close();
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			connection.close();
+			return comprador;
+		}
+		connection.close();
+		
+		return comprador;
+	}
+	
 	public Comprador getComprador(int id) {
 		this.connection.open();
 		try {
@@ -101,22 +127,23 @@ public class CompradorDao {
 		}
 	}
 
-	public Comprador getCompradorNome(String nome) {
+	public List<Comprador> getCompradorNome(String nome) {
 		this.connection.open();
 		try {
 			PreparedStatement stmt = this.connection.getConnection().prepareStatement("select * from Compras.vwComprador where nome like '" + nome +"'");
 
 			ResultSet rs = stmt.executeQuery();
-			Comprador comprador = new Comprador();
+			List<Comprador> compradores = new ArrayList<Comprador>();
 		
 			if (rs.next()) {
-				comprador = this.carregaComprador(rs);
+				compradores.add(this.carregaComprador(rs));
+				
 			}
 
 			rs.close();
 			stmt.close();
 			connection.close();
-			return comprador;
+			return compradores;
 
 		} catch (SQLException e) {
 			connection.close();

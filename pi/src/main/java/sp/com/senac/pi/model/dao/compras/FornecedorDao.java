@@ -15,7 +15,6 @@ import sp.com.senac.pi.model.pojo.compras.Fornecedor;
 import sp.com.senac.pi.model.pojo.localizacao.Cidade;
 import sp.com.senac.pi.model.pojo.localizacao.Estado;
 import sp.com.senac.pi.model.pojo.localizacao.Pais;
-import sp.com.senac.pi.model.pojo.producao.Produto;
 import sp.com.senac.pi.util.control.Util;
 
 public class FornecedorDao {

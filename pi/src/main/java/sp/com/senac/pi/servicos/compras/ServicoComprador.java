@@ -11,29 +11,31 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import sp.com.senac.pi.model.dao.compras.CompradorDao;
 import sp.com.senac.pi.model.dao.compras.FornecedorDao;
+import sp.com.senac.pi.model.pojo.compras.Comprador;
 import sp.com.senac.pi.model.pojo.compras.Fornecedor;
 
-@Path("/fornecedor")
-public class ServicoFornecedor {
+@Path("/comprador")
+public class ServicoComprador {
 	
 	
 	@POST
 	@Path("inserir")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Fornecedor insert(Fornecedor fornecedor) {
+	public Comprador insert(Comprador comprador) {
 		
-		return new FornecedorDao().insert(fornecedor);
+		return new CompradorDao().insert(comprador);
 	}
 	
 	@PUT
 	@Path("alterar")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Fornecedor update(Fornecedor fornecedor) {
+	public Comprador update(Comprador comprador) {
 		
-		return new FornecedorDao().update(fornecedor);
+		return new CompradorDao().update(comprador);
 	}
 	
 	@DELETE
@@ -48,36 +50,36 @@ public class ServicoFornecedor {
 	@GET
 	@Path("lista")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Fornecedor> getFornecedores() {
+	public List<Comprador> getCompradores() {
 		
-		return new FornecedorDao().getFornecedores();
+		return new CompradorDao().getCompradores();
 	}
 	
 	@POST
 	@Path("id")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Fornecedor getForneceorId(Fornecedor fornecedor) {
+	public Comprador getCompradorId(Comprador comprador) {
 		
-		return new FornecedorDao().getFornecedor(fornecedor.getId());
+		return new CompradorDao().getComprador(comprador.getId());
 	}
 	
 	@POST
 	@Path("nome")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public List<Fornecedor> getFornecedorNome(Fornecedor fornecedor) {
+	public List<Comprador> getCompradorNome(Comprador comprador) {
 		
-		return new FornecedorDao().getFornecedorNome(fornecedor.getNomeFantasia());
+		return new CompradorDao().getCompradorNome(comprador.getNome());
 	}
 	
 	@PUT
 	@Path("ativoInativo")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Fornecedor ativoInativo(Fornecedor fornecedor) {
+	public Comprador ativoInativo(Comprador comprador) {
 		
-		return new FornecedorDao().ativoInativo(fornecedor);
+		return new CompradorDao().ativoInativo(comprador);
 	}
 	
 
