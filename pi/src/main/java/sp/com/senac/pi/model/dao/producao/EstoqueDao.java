@@ -268,19 +268,18 @@ public class EstoqueDao {
         }
     }
     
-    public List<Estoque> getEstoques(Produto produto) {
+    public List<Estoque> getEstoques(Estoque estoque) {
     	List<Estoque> estoques = new ArrayList<Estoque>();
     	
         this.connection.open();
         try {
             PreparedStatement stmt = this.connection.getConnection().prepareStatement("Select * from Producao.Estoque where idProduto = ?");
-            stmt.setInt(1, produto.getId());
+            stmt.setInt(1, estoque.getIdProduto());
             
             ResultSet rs = stmt.executeQuery();
            
             while (rs.next()) {
-            	Estoque estoque = this.carregaEstoque(rs);
-                estoques.add(estoque);
+                estoques.add(this.carregaEstoque(rs));
             }
             
             rs.close();

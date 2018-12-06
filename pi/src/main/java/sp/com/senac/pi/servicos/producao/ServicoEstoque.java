@@ -31,9 +31,9 @@ public class ServicoEstoque {
 	@Path("produto")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public List<Estoque> getEstoques(Produto produto) {
+	public List<Estoque> getEstoques(Estoque estoque) {
 		
-		return new EstoqueDao().getEstoques(produto);
+		return new EstoqueDao().getEstoques(estoque);
 	}
 	
 	@GET
