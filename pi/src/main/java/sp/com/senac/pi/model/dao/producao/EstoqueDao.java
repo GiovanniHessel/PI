@@ -226,7 +226,7 @@ public class EstoqueDao {
     public Estoque getEstoque(Integer id) {
         this.connection.open();
         try {
-            PreparedStatement stmt = this.connection.getConnection().prepareStatement("Select * from Produto.Estoque Where id = ?");
+            PreparedStatement stmt = this.connection.getConnection().prepareStatement("Select * from Producao.Estoque Where id = ?");
             stmt.setInt(1, id);
 
             ResultSet rs = stmt.executeQuery();
@@ -250,7 +250,7 @@ public class EstoqueDao {
     public List<Estoque> getEstoques() {
         this.connection.open();
         try {
-            PreparedStatement stmt = this.connection.getConnection().prepareStatement("Select * from Produto.Estoque");
+            PreparedStatement stmt = this.connection.getConnection().prepareStatement("Select * from Producao.Estoque");
 
             ResultSet rs = stmt.executeQuery();
             List<Estoque> estoques = new ArrayList<Estoque>();
@@ -357,7 +357,7 @@ public class EstoqueDao {
         stmt.setInt(1, estoque.getId());
         stmt.setFloat(2, estoque.getQuantidade());
         stmt.setString(3, estoque.getMotivo());
-        stmt.setString(4, estoque.getDataEstoque());
+        stmt.setString(4, new Util().getStringDate(estoque.getDataEstoque()));
         
         if (estoque.getIdProduto() == null) {
         	stmt.setNull(5, Types.INTEGER);

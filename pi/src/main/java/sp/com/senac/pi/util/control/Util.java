@@ -22,7 +22,10 @@ public class Util {
 		this.dateFormat = new SimpleDateFormat("yyyyMMdd hh:MM:ss"); 
 		Date date = new Date();
         try {
-        	date = this.dateFormat.parse(data);
+        	if (! data.isEmpty()) {
+        		date = this.dateFormat.parse(data);
+        	}
+        	
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}

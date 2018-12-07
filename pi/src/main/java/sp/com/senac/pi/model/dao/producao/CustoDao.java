@@ -180,7 +180,7 @@ public class CustoDao {
     public Custo getCusto(Integer id) {
         this.connection.open();
         try {
-            PreparedStatement stmt = this.connection.getConnection().prepareStatement("Select * from Produto.Custo Where id = ?");
+            PreparedStatement stmt = this.connection.getConnection().prepareStatement("Select * from Producao.Custo Where id = ?");
             stmt.setInt(1, id);
 
             ResultSet rs = stmt.executeQuery();
@@ -204,7 +204,7 @@ public class CustoDao {
     public List<Custo> getCustos() {
         this.connection.open();
         try {
-            PreparedStatement stmt = this.connection.getConnection().prepareStatement("Select * from Produto.Custo");
+            PreparedStatement stmt = this.connection.getConnection().prepareStatement("Select * from Producao.Custo");
 
             ResultSet rs = stmt.executeQuery();
             List<Custo> custos = new ArrayList<Custo>();

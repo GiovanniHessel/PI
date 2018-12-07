@@ -179,7 +179,7 @@ public class PrecoDao {
     public Preco getPreco(Integer id) {
         this.connection.open();
         try {
-            PreparedStatement stmt = this.connection.getConnection().prepareStatement("Select * from Produto.Preco Where id = ?");
+            PreparedStatement stmt = this.connection.getConnection().prepareStatement("Select * from Producao.Preco Where id = ?");
             stmt.setInt(1, id);
 
             ResultSet rs = stmt.executeQuery();
@@ -203,7 +203,7 @@ public class PrecoDao {
     public List<Preco> getPrecos() {
         this.connection.open();
         try {
-            PreparedStatement stmt = this.connection.getConnection().prepareStatement("Select * from Produto.Preco");
+            PreparedStatement stmt = this.connection.getConnection().prepareStatement("Select * from Producao.Preco");
 
             ResultSet rs = stmt.executeQuery();
             List<Preco> precos = new ArrayList<Preco>();
