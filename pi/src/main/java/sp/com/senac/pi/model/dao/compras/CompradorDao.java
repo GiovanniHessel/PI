@@ -208,7 +208,7 @@ public class CompradorDao {
     	
 		try {
 			comprador.setId(rs.getInt("id"));
-			comprador.setLimiteCredito(rs.getFloat("limiteDeCredito"));
+			comprador.setLimiteDeCredito(rs.getFloat("limiteDeCredito"));
 			comprador.setInativo(rs.getInt("inativo"));
 			
 			comprador.setIdPessoa(rs.getInt("idPessoa"));
@@ -259,7 +259,7 @@ public class CompradorDao {
 			PreparedStatement stmt = connection.getConnection().prepareStatement(sql);
 			
 			stmt.setInt(1, comprador.getId());
-			stmt.setFloat(2, comprador.getLimiteCredito());
+			stmt.setFloat(2, comprador.getLimiteDeCredito());
 			stmt.setInt(3, comprador.getIdPessoa());
 			stmt.setInt(4, comprador.getInativo());
 			

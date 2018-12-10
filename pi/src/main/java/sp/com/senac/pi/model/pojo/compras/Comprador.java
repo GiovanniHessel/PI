@@ -4,18 +4,18 @@ import sp.com.senac.pi.model.pojo.base.Pessoa;
 
 public class Comprador extends Pessoa{
 	private int id;
-	private float limiteCredito;
+	private float limiteDeCredito;
 	private int inativo;
 	
-	public Comprador(int id, float limiteCredito, int inativo) {
+	public Comprador(int id, float limiteDeCredito, int inativo) {
 		this.id = id;
-		this.limiteCredito = limiteCredito;
+		this.limiteDeCredito = limiteDeCredito;
 		this.inativo = inativo;
 	}
 	
 	public Comprador() {
 		this.id = 0;
-		this.limiteCredito = 0;
+		this.limiteDeCredito = 0;
 		this.inativo = 0;
 	}
 
@@ -27,12 +27,12 @@ public class Comprador extends Pessoa{
 		this.id = id;
 	}
 
-	public float getLimiteCredito() {
-		return limiteCredito;
+	public float getLimiteDeCredito() {
+		return limiteDeCredito;
 	}
 
-	public void setLimiteCredito(float limiteCredito) {
-		this.limiteCredito = limiteCredito;
+	public void setLimiteDeCredito(float limiteDeCredito) {
+		this.limiteDeCredito = limiteDeCredito;
 	}
 
 	public int getInativo() {

@@ -43,7 +43,7 @@ public class CompraDao {
 		this.connection.open();
 		try {
 			PreparedStatement stmt = this.connection.getConnection()
-					.prepareStatement("select * from vwCompra where id = ?");
+					.prepareStatement("select * from Compras.vwCompra where id = ?");
 			stmt.setInt(1, id);
 
 			ResultSet rs = stmt.executeQuery();
@@ -68,7 +68,7 @@ public class CompraDao {
 		this.connection.open();
 		try {
 			PreparedStatement stmt = this.connection.getConnection()
-					.prepareStatement("select * from vwCompra");
+					.prepareStatement("select * from Compras.vwCompra");
 
 			ResultSet rs = stmt.executeQuery();
 			List<Compra> compras = new ArrayList<Compra>();
@@ -118,7 +118,7 @@ public class CompraDao {
 		this.connection.open();
 		try {
 			PreparedStatement stmt = this.connection.getConnection()
-					.prepareStatement("select * from vwCompra where recebido = 0");
+					.prepareStatement("select * from Compras.vwCompra where recebido = 0");
 
 			ResultSet rs = stmt.executeQuery();
 			List<Compra> compras = new ArrayList<Compra>();
@@ -143,7 +143,7 @@ public class CompraDao {
 		this.connection.open();
 		try {
 			PreparedStatement stmt = this.connection.getConnection()
-					.prepareStatement("select * from vwCompra where idFornecedor = ?");
+					.prepareStatement("select * from Compras.vwCompra where idFornecedor = ?");
 			stmt.setInt(1, fornecedor.getId());
 			
 			ResultSet rs = stmt.executeQuery();
@@ -169,7 +169,7 @@ public class CompraDao {
 		this.connection.open();
 		try {
 			PreparedStatement stmt = this.connection.getConnection()
-					.prepareStatement("select * from vwCompra where idComprador = ?");
+					.prepareStatement("select * from Compras.vwCompra where idComprador = ?");
 			stmt.setInt(1, comprador.getId());
 			
 			ResultSet rs = stmt.executeQuery();
@@ -195,7 +195,7 @@ public class CompraDao {
 		this.connection.open();
 		try {
 			PreparedStatement stmt = this.connection.getConnection()
-					.prepareStatement("select * from vwCompra where dataDaCompra >= ? and dataCompra <= ?");
+					.prepareStatement("select * from Compras.vwCompra where dataDaCompra >= ? and dataCompra <= ?");
 			stmt.setString(1, dataInicial);
 			stmt.setString(1, dataFinal);
 			

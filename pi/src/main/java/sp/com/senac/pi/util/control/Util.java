@@ -10,16 +10,16 @@ public class Util {
 	private DateFormat dateFormat; 
 	
 	public Util() {
-		this.dateFormat = new SimpleDateFormat("yyyyMMdd hh:MM:ss"); 
+		this.dateFormat = new SimpleDateFormat("yyyyMMdd"); 
 	}
 	
 	public String getStringDate(Date data){
-		this.dateFormat = new SimpleDateFormat("yyyy-MM-dd"); 
+		this.dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:MM:ss"); 
 		return dateFormat.format(data);
 	}
 	
 	public String getStringDate(String data) {
-		this.dateFormat = new SimpleDateFormat("yyyyMMdd hh:MM:ss"); 
+		this.dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:MM:ss"); 
 		Date date = new Date();
         try {
         	if (! data.isEmpty()) {
